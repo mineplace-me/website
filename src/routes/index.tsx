@@ -1,6 +1,6 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Blocks, Box, Cuboid, Hand } from 'lucide-icons-qwik';
+import { Box } from 'lucide-icons-qwik';
 
 export default component$(() => {
   return (
