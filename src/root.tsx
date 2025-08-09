@@ -1,5 +1,5 @@
 import { component$, isDev } from '@builder.io/qwik';
-import { QwikCityProvider, RouterOutlet } from '@builder.io/qwik-city';
+import { DocumentHead, DocumentHeadValue, QwikCityProvider, RouterOutlet } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
@@ -36,3 +36,38 @@ export default component$(() => {
     </QwikCityProvider>
   );
 });
+
+export function generateHead({
+  title = 'Mineplace - Powered by Birdflop Hosting',
+  description = 'A 3D reimagining of r/place',
+  image = '/branding/icon.png',
+  head = {},
+}: {
+  title?: string;
+  description?: string;
+  image?: string;
+  head?: Partial<DocumentHeadValue>;
+}): DocumentHead {
+  return {
+    ...head,
+    title,
+    meta: [
+      {
+        name: 'description',
+        content: description,
+      },
+      {
+        name: 'og:description',
+        content: description,
+      },
+      {
+        name: 'og:image',
+        content: image,
+      },
+      ...(head.meta ?? []),
+    ],
+    scripts: [
+      ...(head.scripts ?? []),
+    ],
+  };
+}
