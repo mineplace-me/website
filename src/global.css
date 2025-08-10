@@ -11,7 +11,7 @@
 
 @theme {
   --lum-default-alpha: 70;
-  --lum-border-radius: 0.5rem;
+  --lum-border-radius: 1rem;
   --color-gray-50: oklch(98.5% 0.002 278.839);
   --color-gray-100: oklch(96.7% 0.003 295.542);
   --color-gray-200: oklch(92.8% 0.006 295.531);

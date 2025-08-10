@@ -4,9 +4,6 @@ import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
 
-// @ts-ignore
-import Background from '~/components/pack.png?jsx&w=1280;1920;2560';
-
 export default component$(() => {
   /**
    * The root of a QwikCity site always start with the <QwikCityProvider> component,
@@ -28,9 +25,6 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body lang="en" class="text-lum-text">
-        <Background id="bg" class={{
-          'fixed scale-120 bottom-0 blur-none overflow-hidden -z-10 w-lvw h-lvh object-cover brightness-50': true,
-        }}/>
         <RouterOutlet />
       </body>
     </QwikCityProvider>
