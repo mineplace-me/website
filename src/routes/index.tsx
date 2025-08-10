@@ -1,6 +1,6 @@
-import { component$, useSignal, useStore } from '@builder.io/qwik';
+import { component$, useSignal, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { Box, Github, Network, X } from 'lucide-icons-qwik';
-import { LogoBirdflop, LogoDiscord, LogoLuminescent, Nav } from '@luminescent/ui-qwik';
+import { LogoBirdflop, LogoDiscord, LogoLuminescent } from '@luminescent/ui-qwik';
 import { generateHead } from '~/root';
 
 export default component$(() => {
@@ -10,6 +10,50 @@ export default component$(() => {
   const mapStore = useStore({
     zoom: 1,
     position: { x: 0, y: 0, z: 0 },
+  });
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    mapRef.value?.contentWindow?.addEventListener('playerListUpdate', (event: any) => {
+      const players = JSON.parse(event.data.players);
+      console.log(players);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onPosition', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onViewMode', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onFollowingPlayerStatus', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onMapChange', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onUrlChange', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('onSunlightStrength', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('mapListUpdate', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('allSettings', (event: any) => {
+      console.log(event.data);
+    });
+
+    mapRef.value?.contentWindow?.addEventListener('localStorageData', (event: any) => {
+      console.log(event.data);
+    });
   });
 
   return <>
