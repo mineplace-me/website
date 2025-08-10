@@ -1,4 +1,4 @@
-import { component$, useSignal, useStore, useVisibleTask$ } from '@builder.io/qwik';
+import { $, component$, useSignal, useStore } from '@builder.io/qwik';
 import { Box, Github, Network, X } from 'lucide-icons-qwik';
 import { LogoBirdflop, LogoDiscord, LogoLuminescent } from '@luminescent/ui-qwik';
 import { generateHead } from '~/root';
@@ -10,54 +10,36 @@ export default component$(() => {
   const mapStore = useStore({
     zoom: 1,
     position: { x: 0, y: 0, z: 0 },
+    viewMode: 'flat',
   });
 
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(() => {
-    mapRef.value?.contentWindow?.addEventListener('playerListUpdate', (event: any) => {
-      const players = JSON.parse(event.data.players);
-      console.log(players);
-    });
+  const onLoad$ = $(() => {
+    console.log('loaded');
 
-    mapRef.value?.contentWindow?.addEventListener('onPosition', (event: any) => {
-      console.log(event.data);
-    });
+    window.addEventListener('message', (event: any) => {
+      if (event.origin !== 'https://map.mineplace.me') return;
 
-    mapRef.value?.contentWindow?.addEventListener('onViewMode', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('onFollowingPlayerStatus', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('onMapChange', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('onUrlChange', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('onSunlightStrength', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('mapListUpdate', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('allSettings', (event: any) => {
-      console.log(event.data);
-    });
-
-    mapRef.value?.contentWindow?.addEventListener('localStorageData', (event: any) => {
-      console.log(event.data);
+      const { data } = event;
+      switch (data.type) {
+        case 'onPosition':
+          console.log('Position:', data.position);
+          mapStore.position = data.position;
+          break;
+        case 'onViewMode': {
+          const { mode } = data;
+          mapStore.viewMode = mode;
+          break;
+        }
+        // …etc for all other event types
+        default:
+          console.log('Other message:', data);
+          break;
+      }
     });
   });
 
   return <>
-    <iframe ref={mapRef} id="bg" src="https://map.mineplace.me" class={{
+    <iframe ref={mapRef} onLoad$={onLoad$} id="bg" src="https://map.mineplace.me" class={{
       'fixed bottom-0 overflow-hidden w-lvw h-lvh object-cover': true,
       'opacity-50': !closed.value,
     }}/>
@@ -186,28 +168,30 @@ export default component$(() => {
         'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-2xl shadow-gray-900 backdrop-blur-lg gap-2': true,
         'pointer-events-none -m-10 opacity-0': !closed.value,
       }}>
-        <label for="x" class="px-2 font-bold text-xl">
+        <label for="x" class="px-2 font-bold text-xl text-red-300">
           x
         </label>
-        <input id="x" type="number" class="lum-input rounded-lum-2 w-30" value={mapStore.position.x} />
+        <input id="x" type="number" class="lum-input rounded-lum-2 w-30 text-center" value={mapStore.position.x} />
       </div>
+      {mapStore.viewMode !== 'flat' && (
+        <div class={{
+          'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-2xl shadow-gray-900 backdrop-blur-lg gap-2': true,
+          'pointer-events-none -m-10 opacity-0': !closed.value,
+        }}>
+          <label for="x" class="px-2 font-bold text-xl text-green-300">
+            y
+          </label>
+          <input id="y" type="number" class="lum-input rounded-lum-2 w-30 text-center" value={mapStore.position.y} />
+        </div>)
+      }
       <div class={{
         'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-2xl shadow-gray-900 backdrop-blur-lg gap-2': true,
         'pointer-events-none -m-10 opacity-0': !closed.value,
       }}>
-        <label for="x" class="px-2 font-bold text-xl">
-          y
-        </label>
-        <input id="y" type="number" class="lum-input rounded-lum-2 w-30" value={mapStore.position.y} />
-      </div>
-      <div class={{
-        'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-2xl shadow-gray-900 backdrop-blur-lg gap-2': true,
-        'pointer-events-none -m-10 opacity-0': !closed.value,
-      }}>
-        <label for="x" class="px-2 font-bold text-xl">
+        <label for="x" class="px-2 font-bold text-xl text-blue-300">
           z
         </label>
-        <input id="z" type="number" class="lum-input rounded-lum-2 w-30" value={mapStore.position.z} />
+        <input id="z" type="number" class="lum-input rounded-lum-2 w-30 text-center" value={mapStore.position.z} />
       </div>
     </div>
   </>;
