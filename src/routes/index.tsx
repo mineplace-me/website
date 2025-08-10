@@ -56,7 +56,7 @@ export default component$(() => {
 
         <p>
           Mineplace supports Java and Bedrock Edition!<br />
-          Bedrock Port: 21512
+          Bedrock Port: 19132
         </p>
         <div class="flex flex-col md:flex-row gap-2">
           <button class="lum-btn w-full font-minecraft border-luminescent-500 border-2 hover:border-2 hover:lum-bg-luminescent-500 cursor-pointer">
