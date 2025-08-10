@@ -69,7 +69,7 @@ export const SocialButtons = component$(() =>
       <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://luminescent.dev">
         <LogoLuminescent size={24} />
       </a>
-      <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://github.com/LuminescentDev">
+      <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://birdflop.com">
         <LogoBirdflop size={24} />
       </a>
     </div>
@@ -77,7 +77,7 @@ export const SocialButtons = component$(() =>
 );
 
 export default component$(() => {
-  const closed = useSignal(true);
+  const closed = useSignal(false);
   const sidebarOpen = useSignal(false);
   const mapRef = useSignal<HTMLIFrameElement>();
 
@@ -91,6 +91,25 @@ export default component$(() => {
     players: [],
     sidebar: 'player',
   }, { deep: true });
+
+  const setPosition = $((position: { x?: number; y?: number; z?: number }) => {
+    mapStore.position = {
+      ...mapStore.position,
+      ...position,
+    };
+    mapRef.value?.contentWindow?.postMessage({ type: 'updatePosition', ...mapStore.position }, '*');
+  });
+
+  const setViewMode = $((mode: 'flat' | 'perspective' | 'free') => {
+    mapStore.viewMode = mode;
+    const command = mode === 'free' ? 'setFreeFlight'
+      : mode === 'perspective' ? 'setPerspectiveView'
+      : 'setFlatView';
+    mapRef.value?.contentWindow?.postMessage({
+      type: 'viewMode', command,
+      options: { transition: 500, heightTransition: 256 },
+    }, '*');
+  });
 
   const onLoad$ = $(async () => {
     console.log('loaded');
@@ -114,6 +133,10 @@ export default component$(() => {
         }
         case 'localStorageData': {
           const settings = JSON.parse(data.storage);
+          setViewMode('perspective');
+          setTimeout(() => {
+            setViewMode('free');
+          }, 1000);
           // remove 'bluemap-' prefix from keys
           Object.keys(settings).forEach(key => {
             if (key.startsWith('bluemap-')) {
@@ -140,25 +163,6 @@ export default component$(() => {
     });
   });
 
-  const setPosition = $((position: { x?: number; y?: number; z?: number }) => {
-    mapStore.position = {
-      ...mapStore.position,
-      ...position,
-    };
-    mapRef.value?.contentWindow?.postMessage({ type: 'updatePosition', ...mapStore.position }, '*');
-  });
-
-  const setViewMode = $((mode: 'flat' | 'perspective' | 'free') => {
-    mapStore.viewMode = mode;
-    const command = mode === 'free' ? 'setFreeFlight'
-      : mode === 'perspective' ? 'setPerspectiveView'
-      : 'setFlatView';
-    mapRef.value?.contentWindow?.postMessage({
-      type: 'viewMode', command,
-      options: { transition: 500, heightTransition: 256 },
-    }, '*');
-  });
-
   return <>
     <iframe ref={mapRef} onLoad$={onLoad$} id="bg" src="https://map.mineplace.me" class={{
       'fixed bottom-0 overflow-hidden w-lvw h-lvh object-cover': true,
@@ -173,7 +177,10 @@ export default component$(() => {
           'md:p-16 md:min-h-auto md:animate-in md:fade-in md:slide-in-from-top-6 md:anim-duration-1000 ': true,
         }}>
           <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
-            <X size={32} onClick$={() => closed.value = !closed.value} />
+            <X size={32} onClick$={() => {
+              closed.value = !closed.value;
+              setViewMode('flat');
+            }} />
           </button>
           <div class="flex gap-4 items-center mb-6">
             <Box size={64} />
@@ -429,7 +436,8 @@ export default component$(() => {
       </div>
       <div class="flex flex-1 gap-2 justify-end items-start">
         <div class={{
-          'flex flex-col gap-2 items-end pointer-events-auto': closed.value,
+          'flex flex-col gap-2 items-end': true,
+          'pointer-events-auto': closed.value,
         }}>
           <div class={{
             'transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
