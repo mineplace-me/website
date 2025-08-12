@@ -1,7 +1,30 @@
 import { $, component$, useSignal, useStore } from '@builder.io/qwik';
-import { Box, Github, Network, RefreshCcw, Rotate3D, Settings, Square, Sun, Users, X } from 'lucide-icons-qwik';
+import { Box, Github, Network, RefreshCcw, Rotate3D, Settings, Square, Sun, Trophy, Users, X } from 'lucide-icons-qwik';
 import { LogoBirdflop, LogoDiscord, LogoLuminescent, NumberInput, SelectMenuRaw, Toggle } from '@luminescent/ui-qwik';
 import { generateHead } from '~/root';
+import { routeLoader$ } from '@builder.io/qwik-city';
+
+type LeaderboardResponse = {
+  data: LeaderboardData;
+  success: boolean;
+  timestamp: string;
+}
+
+type LeaderboardData = {
+  leaderboard: LeaderboardEntry[];
+  totalPlayers: number;
+}
+
+type LeaderboardEntry = {
+  rank: number;
+  uuid: string;
+  username: string;
+  totalActions: number;
+  availableActions: number;
+  maxActions: number;
+  online: boolean;
+  lastLogin: string;
+};
 
 type MapStore = {
   zoom: number;
@@ -24,7 +47,7 @@ type MapStore = {
     showDebug: boolean;
     superSampling: number;
   }>;
-  sidebar: 'player' | 'settings' | null;
+  sidebar: 'player' | 'settings' | 'leaderboard' | null;
 }
 
 export const viewModeOptions: {
@@ -76,11 +99,32 @@ export const SocialButtons = component$(() =>
   </div>,
 );
 
+export const useServerApi = routeLoader$(async () => {
+  try {
+    const url = 'http://play.mineplace.me:54876/api/leaderboard';
+
+    //add X-API-Key header
+
+    const headers = new Headers();
+    headers.append('X-API-Key', 'abcd');
+
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      throw new Error('Failed to fetch leaderboard data');
+    }
+
+    return response.json() as Promise<LeaderboardResponse>;
+  } catch (error) {
+    console.error('Failed to fetch leaderboard data:', error);
+    return { data: { leaderboard: [], totalPlayers: 0 }, success: false, timestamp: new Date().toISOString() } as LeaderboardResponse;
+  }
+});
+
 export default component$(() => {
   const closed = useSignal(false);
   const sidebarOpen = useSignal(false);
   const mapRef = useSignal<HTMLIFrameElement>();
-
+  const leaderboard = useServerApi();
   const mapStore = useStore<MapStore>({
     zoom: 1,
     position: { x: 0, y: 0, z: 0 },
@@ -113,7 +157,7 @@ export default component$(() => {
 
   const onLoad$ = $(async () => {
     console.log('loaded');
-
+    console.log('leaderboard info:', leaderboard.value);
     const players = await fetch('https://map.mineplace.me/maps/world/live/players.json');
     const playersData = await players.json();
     mapStore.players = playersData.players;
@@ -271,6 +315,16 @@ export default component$(() => {
               </button>
               <button class={{
                 'lum-btn p-2 rounded-lum-2': true,
+                'lum-bg-transparent': mapStore.sidebar !== 'leaderboard' || !sidebarOpen.value,
+              }} onClick$={() => {
+                if (mapStore.sidebar == 'leaderboard' && sidebarOpen.value) return sidebarOpen.value = false;
+                sidebarOpen.value = true;
+                mapStore.sidebar = 'leaderboard';
+              }}>
+                <Trophy size={24} />
+              </button>
+              <button class={{
+                'lum-btn p-2 rounded-lum-2': true,
                 'lum-bg-transparent': mapStore.sidebar !== 'settings' || !sidebarOpen.value,
               }} onClick$={() => {
                 if (mapStore.sidebar == 'settings' && sidebarOpen.value) return sidebarOpen.value = false;
@@ -317,6 +371,12 @@ export default component$(() => {
                 Settings
               </h2>
             }
+            {mapStore.sidebar === 'leaderboard' &&
+              <h2 class="text-2xl font-bold flex items-center gap-2 mb-2">
+                <Trophy size={24} />
+                Leaderboard {leaderboard.value?.data?.totalPlayers ? `(10/${leaderboard.value.data.totalPlayers} players)` : ''}
+              </h2>
+            }
             {mapStore.sidebar === 'player' && <>
               <div class="flex flex-col gap-2">
                 {mapStore.players.map(player => (
@@ -339,6 +399,20 @@ export default component$(() => {
                       </span>
                     </div>
                   </button>
+                ))}
+              </div>
+            </>}
+            {mapStore.sidebar === 'leaderboard' && <>
+              <div class="flex flex-col gap-2">
+                {leaderboard.value?.data?.leaderboard.map((entry: LeaderboardEntry) => (
+                  <div key={entry.uuid} class="flex items-center justify-between p-2 border-b border-gray-200">
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold">{entry.rank}.</span>
+                      <img src={`https://mc-heads.net/head/${entry.uuid}`} alt={entry.username} class="rounded-lum-3" width={24} height={24} />
+                      <span class="font-bold">{entry.username}</span>
+                    </div>
+                    <span class="text-green-500">{entry.totalActions}</span>
+                  </div>
                 ))}
               </div>
             </>}
