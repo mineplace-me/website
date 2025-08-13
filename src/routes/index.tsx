@@ -101,7 +101,7 @@ export const SocialButtons = component$(() =>
 
 export const useServerApi = routeLoader$(async () => {
   try {
-    const url = 'http://api.mineplace.me/api/leaderboard';
+    const url = 'https://api.mineplace.me/api/leaderboard';
 
     //add X-API-Key header
 
