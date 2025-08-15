@@ -31,7 +31,7 @@ export default component$(() => {
           defer
           src="https://umami.bwmp.dev/script.js"
           data-website-id="c85c7029-e6ab-49ad-b5ac-166d5363edc5"
-        ></script>
+        />
         <RouterHead />
       </head>
       <body lang="en" class="text-lum-text">
