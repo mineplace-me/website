@@ -45,7 +45,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "/src/scss/variables.scss";
 
 .side-menu {
   position: fixed;
@@ -85,7 +84,7 @@ export default {
 
     margin: 0.5em;
 
-    @media (max-width: $mobile-break) {
+    @media (max-width: 640px) {
       margin: 0;
     }
 
@@ -103,7 +102,7 @@ export default {
     border-bottom: solid 1px var(--theme-bg-hover);
 
     padding: 0.5em;
-    @media (max-width: $mobile-break) {
+    @media (max-width: 640px) {
       padding: 0;
     }
   }
@@ -117,7 +116,7 @@ export default {
     padding: 0.5em;
 
     height: calc(100% - 4em - 1px);
-    @media (max-width: $mobile-break) {
+    @media (max-width: 640px) {
       height: calc(100% - 3em - 1px);
     }
 

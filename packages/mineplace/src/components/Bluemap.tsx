@@ -5,9 +5,6 @@ export const Bluemap = component$((props: any) => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     try {
-      // Wait a bit for the DOM to be ready
-      await new Promise(resolve => setTimeout(resolve, 100));
-
       // Load the BlueMap UMD file
       await import('../../../bluemap/dist/bluemap.umd.js');
 

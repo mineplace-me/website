@@ -129,8 +129,6 @@
 </script>
 
 <style lang="scss">
-@import "/src/scss/variables.scss";
-
   .control-bar {
     position: fixed;
     top: 0;
@@ -166,7 +164,7 @@
       border-left: none;
     }
 
-    @media (max-width: $mobile-break) {
+    @media (max-width: 640px) {
       margin: 0;
       width: 100%;
 

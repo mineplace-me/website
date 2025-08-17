@@ -4,6 +4,7 @@ import { LogoBirdflop, LogoDiscord, LogoLuminescent, NumberInput, SelectMenuRaw,
 import { generateHead } from '~/root';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { Bluemap } from '~/components/Bluemap';
+import QuartzDev from '~/components/QuartzDev';
 
 type LeaderboardResponse = {
   data: LeaderboardData;
@@ -95,6 +96,9 @@ export const SocialButtons = component$(() =>
       </a>
       <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://birdflop.com">
         <LogoBirdflop size={24} />
+      </a>
+      <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://quartzdev.gg">
+        <QuartzDev width={24} height={24} class="min-w-6 min-h-6" />
       </a>
     </div>
   </div>,

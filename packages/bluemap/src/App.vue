@@ -35,38 +35,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  @import "./scss/global.scss";
-
-  #map-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  #app {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    z-index: 10000; // put over bluemap markers
-
-    pointer-events: none;
-
-    font-size: 1rem;
-    @media (max-width: $mobile-break) {
-      font-size: 1.5rem;
-    }
-
-    .map-state-message {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--theme-fg-light);
-      line-height: 1em;
-      text-align: center;
-    }
-  }
-</style>
