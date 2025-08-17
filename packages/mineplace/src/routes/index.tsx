@@ -181,8 +181,9 @@ export default component$(() => {
       'opacity-0 pointer-events-none': closed.value,
     }}>
       <div class={{
-        'lum-card py-8 min-h-screen max-h-auto max-w-full shadow-xl shadow-gray-950/30 backdrop-blur-lg': true,
-        'lg:p-16 lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 ': true,
+        'lum-card p-16 max-h-auto justify-center w-full backdrop-blur-xl': true,
+        'rounded-none min-h-screen bg-gray-900': true,
+        'lg:rounded-lum lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 lg:w-auto lg:shadow-xl lg:shadow-gray-950/30 bg-gray-900/80': true,
       }}>
         <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
           <X size={32} onClick$={() => {
