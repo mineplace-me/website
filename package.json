@@ -7,7 +7,7 @@
   "scripts": {
     "build": "cd packages/bluemap && bun run build && cd ../mineplace && bun run build",
     "start": "cd packages/bluemap && bun run build && cd ../mineplace && bun run start",
-    "serve": "cd packages/mineplace && bun run build && bun serve"
+    "serve": "cd packages/mineplace && bun serve"
   },
   "type": "module",
   "devDependencies": {
