@@ -148,7 +148,7 @@ export default component$(() => {
     mapStore.viewMode = mode;
     const command = mode === 'free' ? 'setFreeFlight'
       : mode === 'perspective' ? 'setPerspectiveView'
-      : 'setFlatView';
+        : 'setFlatView';
     mapRef.value?.contentWindow?.postMessage({
       type: 'viewMode', command,
       options: { transition: 500, heightTransition: 256 },
@@ -167,42 +167,42 @@ export default component$(() => {
 
       const { data } = event;
       switch (data.type) {
-        case 'onPosition':
-          mapStore.position = data.position;
-          break;
-        case 'onViewMode': {
-          const { mode } = data;
-          mapStore.viewMode = mode;
-          break;
-        }
-        case 'localStorageData': {
-          const settings = JSON.parse(data.storage);
-          setViewMode('perspective');
-          setTimeout(() => {
-            setViewMode('free');
-          }, 1000);
-          // remove 'bluemap-' prefix from keys
-          Object.keys(settings).forEach(key => {
-            if (key.startsWith('bluemap-')) {
-              let newKey = key.replace('bluemap-', '');
+      case 'onPosition':
+        mapStore.position = data.position;
+        break;
+      case 'onViewMode': {
+        const { mode } = data;
+        mapStore.viewMode = mode;
+        break;
+      }
+      case 'localStorageData': {
+        const settings = JSON.parse(data.storage);
+        void setViewMode('perspective');
+        setTimeout(() => {
+          void setViewMode('free');
+        }, 1000);
+        // remove 'bluemap-' prefix from keys
+        Object.keys(settings).forEach(key => {
+          if (key.startsWith('bluemap-')) {
+            let newKey = key.replace('bluemap-', '');
 
-              // rename some keys
-              if (newKey == 'lowresViewDistance') newKey = 'lowresDistance';
-              if (newKey == 'hiresViewDistance') newKey = 'hiresDistance';
+            // rename some keys
+            if (newKey == 'lowresViewDistance') newKey = 'lowresDistance';
+            if (newKey == 'hiresViewDistance') newKey = 'hiresDistance';
 
-              settings[newKey] = settings[key];
-              delete settings[key];
-            }
-          });
-          console.log('Received settings:', settings);
+            settings[newKey] = settings[key];
+            delete settings[key];
+          }
+        });
+        console.log('Received settings:', settings);
 
-          mapStore.settings = { ...mapStore.settings, ...settings };
-          break;
-        }
-        // …etc for all other event types
-        default:
-          console.log('Other message:', data);
-          break;
+        mapStore.settings = { ...mapStore.settings, ...settings };
+        break;
+      }
+      // …etc for all other event types
+      default:
+        console.log('Other message:', data);
+        break;
       }
     });
   });
@@ -216,66 +216,66 @@ export default component$(() => {
       'transition-all duration-300 flex items-center md:justify-center min-h-screen': true,
       'opacity-0 pointer-events-none': closed.value,
     }}>
-        <div class={{
-          'lum-card py-8 min-h-screen max-h-auto max-w-full shadow-xl shadow-gray-950/30 backdrop-blur-lg': true,
-          'md:p-16 md:min-h-auto md:animate-in md:fade-in md:slide-in-from-top-6 md:anim-duration-1000 ': true,
-        }}>
-          <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
-            <X size={32} onClick$={() => {
-              closed.value = !closed.value;
-              setViewMode('flat');
-            }} />
-          </button>
-          <div class="flex gap-4 items-center mb-6">
-            <Box size={64} />
-            <h1 class="text-5xl font-bold">
+      <div class={{
+        'lum-card py-8 min-h-screen max-h-auto max-w-full shadow-xl shadow-gray-950/30 backdrop-blur-lg': true,
+        'md:p-16 md:min-h-auto md:animate-in md:fade-in md:slide-in-from-top-6 md:anim-duration-1000 ': true,
+      }}>
+        <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
+          <X size={32} onClick$={() => {
+            closed.value = !closed.value;
+            void setViewMode('flat');
+          }} />
+        </button>
+        <div class="flex gap-4 items-center mb-6">
+          <Box size={64} />
+          <h1 class="text-5xl font-bold">
               Mineplace
-              <a class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal" href="https://birdflop.com">
-                <LogoBirdflop size={20} />Powered by Birdflop Hosting
-              </a>
-            </h1>
-          </div>
+            <a class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal" href="https://birdflop.com">
+              <LogoBirdflop size={20} />Powered by Birdflop Hosting
+            </a>
+          </h1>
+        </div>
 
-          <p class="text-xl md:text-4xl mb-6 font-minecraft">
+        <p class="text-xl md:text-4xl mb-6 font-minecraft">
             Now imagine if r/place was 3D.
-          </p>
+        </p>
 
-          <div class="text-xs md:text-base">
-            <p class="text-xl font-bold">
+        <div class="text-xs md:text-base">
+          <p class="text-xl font-bold">
               Rules
-            </p>
-            <p>
-              😈 Do not paint over other artworks using random colors or patterns just to mess things up
-            </p>
-            <p>
-              🔞 No +18 or hate group related paintings
-            </p>
-            <p>
-              🔗 Do not reference inappropriate websites
-            </p>
-            <p>
-              🧑‍🤝‍🧑 Do not paint with more than one account
-            </p>
-            <p>
-              🤖 Use of bots is not allowed
-            </p>
-            <p>
-              🙅 Disclosing other user's personal information is not allowed
-            </p>
-            <p>
-              ✅ Painting over other artworks to complement them or create a new drawing is allowed
-            </p>
-            <p>
-              ✅ Griefing political party flags or portraits of politicians is allowed
-            </p>
-          </div>
-
+          </p>
           <p>
+              😈 Do not paint over other artworks using random colors or patterns just to mess things up
+          </p>
+          <p>
+              🔞 No +18 or hate group related paintings
+          </p>
+          <p>
+              🔗 Do not reference inappropriate websites
+          </p>
+          <p>
+              🧑‍🤝‍🧑 Do not paint with more than one account
+          </p>
+          <p>
+              🤖 Use of bots is not allowed
+          </p>
+          <p>
+              🙅 Disclosing other user's personal information is not allowed
+          </p>
+          <p>
+              ✅ Painting over other artworks to complement them or create a new drawing is allowed
+          </p>
+          <p>
+              ✅ Griefing political party flags or portraits of politicians is allowed
+          </p>
+        </div>
+
+        <p>
             Mineplace supports Java and Bedrock Edition!<br />
             Bedrock Port: 19132
-          </p>
-          <SocialButtons />
-        </div>
+        </p>
+        <SocialButtons />
+      </div>
     </div>
     <div class={{
       'fixed flex gap-2 w-full inset-2 pr-4 items-start justify-between pointer-events-none': true,
@@ -419,41 +419,41 @@ export default component$(() => {
             {mapStore.sidebar === 'settings' && <>
               <div class="flex flex-col gap-2">
                 <NumberInput id="hiresDistance" class={{ 'w-20': true }} input value={mapStore.settings.hiresDistance}
-                onIncrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance++}
-                onDecrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance--}>
+                  onIncrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance++}
+                  onDecrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance--}>
                   <label class="text-sm">
                     High Resolution Render Distance
                   </label>
                 </NumberInput>
                 <NumberInput id="lowresDistance" class={{ 'w-20': true }} input value={mapStore.settings.lowresDistance}
-                onIncrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance++}
-                onDecrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance--}>
+                  onIncrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance++}
+                  onDecrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance--}>
                   <label class="text-sm">
                     Low Resolution Render Distance
                   </label>
                 </NumberInput>
                 <NumberInput id="mouseSensitivity" class={{ 'w-20': true }} input value={mapStore.settings.mouseSensitivity}
-                onIncrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity++}
-                onDecrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity--}>
+                  onIncrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity++}
+                  onDecrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity--}>
                   <label class="text-sm">
                     Mouse Sensitivity
                   </label>
                 </NumberInput>
                 <NumberInput id="superSampling" class={{ 'w-20': true }} input value={mapStore.settings.superSampling}
-                onIncrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling++}
-                onDecrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling--}>
+                  onIncrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling++}
+                  onDecrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling--}>
                   <label class="text-sm">
                     Supersampling
                   </label>
                 </NumberInput>
                 <Toggle id="pauseTileLoading" checked={mapStore.settings.pauseTileLoading}
-                onChange$={(e, el) => mapStore.settings.pauseTileLoading = el.checked} label="Pause Tile Loading"/>
+                  onChange$={(e, el) => mapStore.settings.pauseTileLoading = el.checked} label="Pause Tile Loading"/>
                 <Toggle id="invertMouse" checked={mapStore.settings.invertMouse}
-                onChange$={(e, el) => mapStore.settings.invertMouse = el.checked} label="Invert Mouse"/>
+                  onChange$={(e, el) => mapStore.settings.invertMouse = el.checked} label="Invert Mouse"/>
                 <Toggle id="showChunkBorders" checked={mapStore.settings.showChunkBorders}
-                onChange$={(e, el) => mapStore.settings.showChunkBorders = el.checked} label="Show Chunk Borders"/>
+                  onChange$={(e, el) => mapStore.settings.showChunkBorders = el.checked} label="Show Chunk Borders"/>
                 <Toggle id="showDebug" checked={mapStore.settings.showDebug}
-                onChange$={(e, el) => mapStore.settings.showDebug = el.checked} label="Show Debug Info"/>
+                  onChange$={(e, el) => mapStore.settings.showDebug = el.checked} label="Show Debug Info"/>
               </div>
             </>}
           </div>
@@ -472,7 +472,7 @@ export default component$(() => {
             onInput$={(e, el) => {
               const value = parseFloat(el.value);
               if (isNaN(value)) return;
-              setPosition({ x: value });
+              void setPosition({ x: value });
             }} />
         </div>
         {mapStore.viewMode !== 'flat' && (
@@ -485,11 +485,11 @@ export default component$(() => {
               y
             </label>
             <input id="y" type="number" class="lum-input rounded-lum-2 w-20 text-center" value={mapStore.position.y}
-            onInput$={(e, el) => {
-              const value = parseFloat(el.value);
-              if (isNaN(value)) return;
-              setPosition({ y: value });
-            }} />
+              onInput$={(e, el) => {
+                const value = parseFloat(el.value);
+                if (isNaN(value)) return;
+                void setPosition({ y: value });
+              }} />
           </div>)
         }
         <div class={{
@@ -504,7 +504,7 @@ export default component$(() => {
             onInput$={(e, el) => {
               const value = parseFloat(el.value);
               if (isNaN(value)) return;
-              setPosition({ z: value });
+              void setPosition({ z: value });
             }} />
         </div>
       </div>
@@ -545,7 +545,7 @@ export default component$(() => {
             };
           })}
           onChange$={(e, el) => {
-            setViewMode(el.value as MapStore['viewMode']);
+            void setViewMode(el.value as MapStore['viewMode']);
           }}>
           </SelectMenuRaw>
         </div>
