@@ -156,6 +156,7 @@ export default component$(() => {
     }, '*');
   });
 
+  /*
   const onLoad$ = $(async () => {
     console.log('loaded');
     console.log('leaderboard info:', leaderboard.value);
@@ -207,6 +208,7 @@ export default component$(() => {
       }
     });
   });
+  */
 
   return <>
     <Bluemap class={{
