@@ -60,8 +60,8 @@ async function load(el) {
 
   } catch (e) {
     console.error("Failed to load BlueMap webapp!", e);
-    document.body.innerHTML = `
-    <div id="bm-app-err" class="w-full h-full flex">
+    document.getElementById("map-container").innerHTML = `
+    <div id="bm-app-err" class="w-full h-full flex items-center justify-center">
       <div>
         <img src="assets/logo.png" alt="bluemap logo">
         <div class="bm-app-err-main">Failed to load BlueMap webapp!</div>

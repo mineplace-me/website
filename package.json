@@ -2,23 +2,25 @@
   "name": "mineplace-monorepo",
   "private": true,
   "engines": {
-    "node": ">=23.11.0",
-    "npm": "please-use-pnpm",
-    "yarn": "please-use-pnpm",
-    "pnpm": ">=10.10.0"
+    "node": ">=23.11.0"
   },
-  "packageManager": "pnpm@10.14.0",
   "scripts": {
-    "build": "pnpm nx run-many -t build --output-style=stream --parallel=false",
-    "deploy": "pnpm run build && wrangler deploy",
-    "start": "cd packages/bluemap && pnpm build && cd ..//mineplace && pnpm run start"
+    "build": "bun nx run-many -t build --output-style=stream --parallel=false",
+    "start": "cd packages/bluemap && bun run build && cd ../mineplace && bun run start",
+    "serve": "cd packages/mineplace && bun serve"
   },
   "type": "module",
   "devDependencies": {
     "@nx/js": "^21.4.0",
     "nx": "21.4.0",
     "tsx": "^4.20.4",
-    "wrangler": "^4.30.0",
     "yargs": "^18.0.0"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "trustedDependencies": [
+    "@parcel/watcher",
+    "@tailwindcss/oxide"
+  ]
 }

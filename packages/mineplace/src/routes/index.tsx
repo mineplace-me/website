@@ -232,7 +232,7 @@ export default component$(() => {
         <div class="flex gap-4 items-center mb-6">
           <Box size={64} />
           <h1 class="text-5xl font-bold">
-              Mineplace
+            Mineplace
             <a class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal" href="https://birdflop.com">
               <LogoBirdflop size={20} />Powered by Birdflop Hosting
             </a>
@@ -240,42 +240,42 @@ export default component$(() => {
         </div>
 
         <p class="text-xl md:text-4xl mb-6 font-minecraft">
-            Now imagine if r/place was 3D.
+          Now imagine if r/place was 3D.
         </p>
 
         <div class="text-xs md:text-base">
           <p class="text-xl font-bold">
-              Rules
+            Rules
           </p>
           <p>
-              😈 Do not paint over other artworks using random colors or patterns just to mess things up
+            😈 Do not paint over other artworks using random colors or patterns just to mess things up
           </p>
           <p>
-              🔞 No +18 or hate group related paintings
+            🔞 No +18 or hate group related paintings
           </p>
           <p>
-              🔗 Do not reference inappropriate websites
+            🔗 Do not reference inappropriate websites
           </p>
           <p>
-              🧑‍🤝‍🧑 Do not paint with more than one account
+            🧑‍🤝‍🧑 Do not paint with more than one account
           </p>
           <p>
-              🤖 Use of bots is not allowed
+            🤖 Use of bots is not allowed
           </p>
           <p>
-              🙅 Disclosing other user's personal information is not allowed
+            🙅 Disclosing other user's personal information is not allowed
           </p>
           <p>
-              ✅ Painting over other artworks to complement them or create a new drawing is allowed
+            ✅ Painting over other artworks to complement them or create a new drawing is allowed
           </p>
           <p>
-              ✅ Griefing political party flags or portraits of politicians is allowed
+            ✅ Griefing political party flags or portraits of politicians is allowed
           </p>
         </div>
 
         <p>
-            Mineplace supports Java and Bedrock Edition!<br />
-            Bedrock Port: 19132
+          Mineplace supports Java and Bedrock Edition!<br />
+          Bedrock Port: 19132
         </p>
         <SocialButtons />
       </div>
