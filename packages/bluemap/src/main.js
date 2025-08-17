@@ -35,7 +35,7 @@ String.prototype.includesCI = function (val) {
 }
 
 // bluemap app
-async function load() {
+export async function load(el) {
   try {
     const bluemap = new BlueMapApp(document.getElementById("map-container"));
     window.bluemap = bluemap;
@@ -53,7 +53,7 @@ async function load() {
     await loadLanguageSettings()
 
     // load bluemap next tick (to let the assets load first)
-    const app = vue.mount('#app');
+    const app = vue.mount(el);
     await app.$nextTick();
     await bluemap.load();
 

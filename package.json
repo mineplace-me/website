@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm nx run-many -t build --output-style=stream --parallel=false",
     "deploy": "pnpm run build && wrangler deploy",
-    "start": "pnpm build && cd packages/mineplace && pnpm run start"
+    "start": "cd packages/bluemap && pnpm build && cd ..//mineplace && pnpm run start"
   },
   "type": "module",
   "devDependencies": {

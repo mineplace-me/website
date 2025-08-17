@@ -3,6 +3,7 @@ import { Box, Github, Network, RefreshCcw, Rotate3D, Settings, Square, Sun, Trop
 import { LogoBirdflop, LogoDiscord, LogoLuminescent, NumberInput, SelectMenuRaw, Toggle } from '@luminescent/ui-qwik';
 import { generateHead } from '~/root';
 import { routeLoader$ } from '@builder.io/qwik-city';
+import { Bluemap } from '~/components/Bluemap';
 
 type LeaderboardResponse = {
   data: LeaderboardData;
@@ -208,10 +209,7 @@ export default component$(() => {
   });
 
   return <>
-    <iframe ref={mapRef} onLoad$={onLoad$} id="bg" src="https://map.mineplace.me" class={{
-      'fixed bottom-0 overflow-hidden w-lvw h-lvh object-cover': true,
-      'opacity-50': !closed.value,
-    }}/>
+    <Bluemap />
     <div class={{
       'transition-all duration-300 flex items-center md:justify-center min-h-screen': true,
       'opacity-0 pointer-events-none': closed.value,
