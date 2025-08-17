@@ -1,0 +1,21 @@
+{
+  "version": "5.11",
+  "useCookies": true,
+  "defaultToFlatView": true,
+  "resolutionDefault": 1.0,
+  "minZoomDistance": 5,
+  "maxZoomDistance": 100000,
+  "hiresSliderMax": 500,
+  "hiresSliderDefault": 100,
+  "hiresSliderMin": 0,
+  "lowresSliderMax": 7000,
+  "lowresSliderDefault": 2000,
+  "lowresSliderMin": 500,
+  "mapDataRoot": "https://r2.mineplace.me",
+  "liveDataRoot": "https://r2.mineplace.me",
+  "maps": [
+    "world"
+  ],
+  "scripts": [],
+  "styles": []
+}
