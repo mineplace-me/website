@@ -5,9 +5,9 @@
     "node": ">=23.11.0"
   },
   "scripts": {
-    "build": "bun nx run-many -t build --output-style=stream --parallel=false",
+    "build": "cd packages/bluemap && bun run build && cd ../mineplace && bun run build",
     "start": "cd packages/bluemap && bun run build && cd ../mineplace && bun run start",
-    "serve": "cd packages/mineplace && bun serve"
+    "serve": "cd packages/bluemap && bun run build && cd ../mineplace && bun run build && bun serve"
   },
   "type": "module",
   "devDependencies": {
