@@ -79,12 +79,12 @@ export const viewModeOptions: {
 ];
 
 export const SocialButtons = component$(() =>
-  <div class="flex flex-col md:flex-row gap-2">
+  <div class="flex flex-col lg:flex-row gap-2">
     <button class="lum-btn rounded-lum-2 w-full font-minecraft border-luminescent-500 border-2 hover:border-2 hover:lum-bg-luminescent-500 cursor-pointer">
       <Network size={24} />
       IP: play.mineplace.me
     </button>
-    <div class="flex flex-1 justify-evenly gap-1 mt-2 md:mt-0">
+    <div class="flex flex-1 justify-evenly gap-1 mt-2 lg:mt-0">
       <a class="lum-btn rounded-lum-2 p-2 lum-bg-transparent" href="https://discord.gg/nmgtX5z">
         <LogoDiscord size={24} />
       </a>
@@ -177,12 +177,12 @@ export default component$(() => {
       'opacity-50': !closed.value,
     }} />
     <div class={{
-      'transition-all duration-300 flex items-center md:justify-center min-h-screen': true,
+      'transition-all duration-300 flex items-center lg:justify-center min-h-screen': true,
       'opacity-0 pointer-events-none': closed.value,
     }}>
       <div class={{
         'lum-card py-8 min-h-screen max-h-auto max-w-full shadow-xl shadow-gray-950/30 backdrop-blur-lg': true,
-        'md:p-16 md:min-h-auto md:animate-in md:fade-in md:slide-in-from-top-6 md:anim-duration-1000 ': true,
+        'lg:p-16 lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 ': true,
       }}>
         <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
           <X size={32} onClick$={() => {
@@ -200,11 +200,11 @@ export default component$(() => {
           </h1>
         </div>
 
-        <p class="text-xl md:text-4xl mb-6 font-minecraft">
+        <p class="text-xl lg:text-4xl mb-6 font-minecraft">
           Now imagine if r/place was 3D.
         </p>
 
-        <div class="text-xs md:text-base">
+        <div class="text-xs lg:text-base">
           <p class="text-xl font-bold">
             Rules
           </p>
@@ -242,11 +242,11 @@ export default component$(() => {
       </div>
     </div>
     <div class={{
-      'fixed flex gap-2 w-full inset-2 pr-4 items-start justify-between pointer-events-none': true,
+      'fixed flex flex-col lg:flex-row gap-2 w-full inset-2 pr-4 items-start justify-between pointer-events-none': true,
     }}>
-      <div class="flex flex-col flex-1 gap-2 items-start">
+      <div class="flex-1 flex w-full lg:w-auto flex-col gap-2 items-start">
         <button class={{
-          'transition-all duration-400 hover:duration-400 lum-btn p-4 text-left flex-row items-center shadow-xl shadow-gray-950/30 backdrop-blur-lg cursor-pointer': true,
+          'w-full lg:w-auto transition-all duration-400 hover:duration-400 lum-btn p-4 text-left flex-row items-center shadow-xl shadow-gray-950/30 backdrop-blur-lg cursor-pointer': true,
           '-mt-10 opacity-0': !closed.value,
           'pointer-events-auto': closed.value,
         }} onClick$={() => closed.value = !closed.value}>
@@ -423,7 +423,8 @@ export default component$(() => {
           </div>
         </div>
       </div>
-      <div class="flex flex-1 gap-2 justify-center">
+      <div class="flex-1 lg:hidden"></div>
+      <div class="flex lg:flex-1 gap-2 justify-center w-full">
         <div class={{
           'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
           '-mt-10 opacity-0': !closed.value,
@@ -439,23 +440,21 @@ export default component$(() => {
               void setPosition({ x: value });
             }} />
         </div>
-        {mapStore.viewMode !== 'flat' && (
-          <div class={{
-            'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
-            '-mt-10 opacity-0': !closed.value,
-            'pointer-events-auto': closed.value,
-          }}>
-            <label for="x" class="px-2 font-bold text-xl text-green-300">
-              y
-            </label>
-            <input id="y" type="number" class="lum-input rounded-lum-2 w-20 text-center" value={mapStore.position.y}
-              onInput$={(e, el) => {
-                const value = parseFloat(el.value);
-                if (isNaN(value)) return;
-                void setPosition({ y: value });
-              }} />
-          </div>)
-        }
+        <div class={{
+          'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
+          '-mt-10 opacity-0': !closed.value,
+          'pointer-events-auto': closed.value,
+        }}>
+          <label for="x" class="px-2 font-bold text-xl text-green-300">
+            y
+          </label>
+          <input id="y" type="number" class="lum-input rounded-lum-2 w-20 text-center" value={mapStore.position.y}
+            onInput$={(e, el) => {
+              const value = parseFloat(el.value);
+              if (isNaN(value)) return;
+              void setPosition({ y: value });
+            }} />
+        </div>
         <div class={{
           'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
           '-mt-10 opacity-0': !closed.value,
@@ -472,19 +471,19 @@ export default component$(() => {
             }} />
         </div>
       </div>
-      <div class="flex flex-1 gap-2 justify-end items-start">
+      <div class="flex w-full lg:w-auto lg:flex-1 gap-2 justify-end items-start">
         <div class={{
-          'flex flex-col gap-2 items-end': true,
+          'flex w-full lg:w-auto flex-col gap-2 items-end': true,
           'pointer-events-auto': closed.value,
         }}>
           <div class={{
-            'transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
+            'flex w-full transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
             '-mt-10 opacity-0': !closed.value,
           }}>
             <SocialButtons />
           </div>
           <SelectMenuRaw align='right' class={{
-            'transition-all duration-400 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
+            'hidden lg:flex transition-all duration-400 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
             'opacity-0': !closed.value,
           }} value={mapStore.viewMode} values={viewModeOptions.map(option => {
             return {
