@@ -25,7 +25,7 @@
 import { Vector2, Scene, Group } from 'three';
 import  { Tile } from './Tile.js';
 import {alert, dispatchEvent, hashTile} from '../util/Utils.js';
-import {TileMap} from "./TileMap";
+import {TileMap} from "./TileMap.js";
 
 export class TileManager {
 

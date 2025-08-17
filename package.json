@@ -1,0 +1,24 @@
+{
+  "name": "mineplace-monorepo",
+  "private": true,
+  "engines": {
+    "node": ">=23.11.0",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "pnpm": ">=10.10.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "build:release": "pnpm build && pnpm release",
+    "build": "pnpm nx run-many -t build --output-style=stream --parallel=false",
+    "release": "tsx tools/release.ts",
+    "start:docs": "pnpm build && cd packages/ui-docs && pnpm run start"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@nx/js": "^21.3.8",
+    "nx": "21.3.8",
+    "tsx": "^4.20.3",
+    "yargs": "^18.0.0"
+  }
+}
