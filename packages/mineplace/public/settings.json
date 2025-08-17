@@ -12,7 +12,7 @@
   "lowresSliderDefault": 2000,
   "lowresSliderMin": 500,
   "mapDataRoot": "https://r2.mineplace.me",
-  "liveDataRoot": "https://r2.mineplace.me",
+  "liveDataRoot": "",
   "maps": [
     "world"
   ],

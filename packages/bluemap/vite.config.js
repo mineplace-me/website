@@ -27,16 +27,4 @@ export default defineConfig({
       // external: ['vue'],       // don't bundle Vue if Qwik will load it separately
     }
   },
-  server: {
-    proxy: {
-      '/settings.json': {
-        target: 'https://bluecolored.de/bluemap',
-        changeOrigin: true,
-      },
-      '/maps': {
-        target: 'https://bluecolored.de/bluemap',
-        changeOrigin: true,
-      }
-    }
-  }
 })
