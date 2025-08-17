@@ -10,7 +10,7 @@
   "packageManager": "pnpm@10.13.1",
   "scripts": {
     "build": "pnpm nx run-many -t build --output-style=stream --parallel=false",
-    "start": "pnpm build && cd packages/ui && pnpm run start"
+    "start": "pnpm build && cd packages/mineplace && pnpm run start"
   },
   "type": "module",
   "devDependencies": {
