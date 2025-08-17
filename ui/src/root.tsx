@@ -1,5 +1,10 @@
 import { component$, isDev } from '@builder.io/qwik';
-import { DocumentHead, DocumentHeadValue, QwikCityProvider, RouterOutlet } from '@builder.io/qwik-city';
+import {
+  DocumentHead,
+  DocumentHeadValue,
+  QwikCityProvider,
+  RouterOutlet,
+} from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
@@ -22,6 +27,11 @@ export default component$(() => {
             href={`${import.meta.env.BASE_URL}manifest.json`}
           />
         )}
+        <script
+          defer
+          src="https://umami.bwmp.dev/script.js"
+          data-website-id="aab9497f-6ef8-4ce0-a464-e0b09b03eef9"
+        />
         <RouterHead />
       </head>
       <body lang="en" class="text-lum-text">
@@ -60,8 +70,6 @@ export function generateHead({
       },
       ...(head.meta ?? []),
     ],
-    scripts: [
-      ...(head.scripts ?? []),
-    ],
+    scripts: [...(head.scripts ?? [])],
   };
 }
