@@ -209,7 +209,10 @@ export default component$(() => {
   });
 
   return <>
-    <Bluemap />
+    <Bluemap class={{
+      'fixed bottom-0 overflow-hidden w-lvw h-lvh object-cover': true,
+      'opacity-50': !closed.value,
+    }} />
     <div class={{
       'transition-all duration-300 flex items-center md:justify-center min-h-screen': true,
       'opacity-0 pointer-events-none': closed.value,

@@ -35,7 +35,7 @@ String.prototype.includesCI = function (val) {
 }
 
 // bluemap app
-export async function load(el) {
+async function load(el) {
   try {
     const bluemap = new BlueMapApp(document.getElementById("map-container"));
     window.bluemap = bluemap;
@@ -72,4 +72,21 @@ export async function load(el) {
   }
 }
 
-load().catch(error => console.error(error));
+// Export for different module systems
+const exports = { load };
+
+// For CommonJS/Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = exports;
+}
+
+// For ES modules
+export default exports;
+
+// For UMD/global
+if (typeof window !== 'undefined') {
+  window.BlueMapModule = exports;
+}
+
+// Remove the automatic load() call - only call when explicitly requested
+// load().catch(error => console.error(error));

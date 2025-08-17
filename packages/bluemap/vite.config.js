@@ -23,7 +23,8 @@ export default defineConfig({
       fileName: 'bluemap'
     },
     rollupOptions: {
-      external: ['vue'],       // don't bundle Vue if Qwik will load it separately
+      // Remove external Vue configuration to bundle Vue with the library
+      // external: ['vue'],       // don't bundle Vue if Qwik will load it separately
     }
   },
   server: {
