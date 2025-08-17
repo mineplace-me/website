@@ -3,6 +3,8 @@
 FROM oven/bun:1 AS base
 WORKDIR /app
 
+RUN apk add wget
+
 COPY . .
 
 # install dependencies into temp directory
