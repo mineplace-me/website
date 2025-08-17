@@ -1,4 +1,4 @@
-import { $, component$, useSignal, useStore } from '@builder.io/qwik';
+import { $, component$, createContextId, useContextProvider, useSignal, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { Box, Github, Network, RefreshCcw, Rotate3D, Settings, Square, Sun, Trophy, Users, X } from 'lucide-icons-qwik';
 import { LogoBirdflop, LogoDiscord, LogoLuminescent, NumberInput, SelectMenuRaw, Toggle } from '@luminescent/ui-qwik';
 import { generateHead } from '~/root';
@@ -125,6 +125,7 @@ export const useServerApi = routeLoader$(async () => {
   }
 });
 
+export const MapStoreContext = createContextId<MapStore>('map-store');
 export default component$(() => {
   const closed = useSignal(false);
   const sidebarOpen = useSignal(false);
@@ -140,6 +141,8 @@ export default component$(() => {
     players: [],
     sidebar: 'player',
   }, { deep: true });
+
+  useContextProvider(MapStoreContext, mapStore);
 
   const setPosition = $((position: { x?: number; y?: number; z?: number }) => {
     mapStore.position = {
@@ -160,59 +163,13 @@ export default component$(() => {
     }, '*');
   });
 
-  /*
-  const onLoad$ = $(async () => {
+  useVisibleTask$(async () => {
     console.log('loaded');
     console.log('leaderboard info:', leaderboard.value);
     const players = await fetch('https://map.mineplace.me/maps/world/live/players.json');
     const playersData = await players.json();
     mapStore.players = playersData.players;
-
-    window.addEventListener('message', (event: any) => {
-      if (event.origin !== 'https://map.mineplace.me') return;
-
-      const { data } = event;
-      switch (data.type) {
-      case 'onPosition':
-        mapStore.position = data.position;
-        break;
-      case 'onViewMode': {
-        const { mode } = data;
-        mapStore.viewMode = mode;
-        break;
-      }
-      case 'localStorageData': {
-        const settings = JSON.parse(data.storage);
-        void setViewMode('perspective');
-        setTimeout(() => {
-          void setViewMode('free');
-        }, 1000);
-        // remove 'bluemap-' prefix from keys
-        Object.keys(settings).forEach(key => {
-          if (key.startsWith('bluemap-')) {
-            let newKey = key.replace('bluemap-', '');
-
-            // rename some keys
-            if (newKey == 'lowresViewDistance') newKey = 'lowresDistance';
-            if (newKey == 'hiresViewDistance') newKey = 'hiresDistance';
-
-            settings[newKey] = settings[key];
-            delete settings[key];
-          }
-        });
-        console.log('Received settings:', settings);
-
-        mapStore.settings = { ...mapStore.settings, ...settings };
-        break;
-      }
-      // …etc for all other event types
-      default:
-        console.log('Other message:', data);
-        break;
-      }
-    });
   });
-  */
 
   return <>
     <Bluemap class={{
@@ -410,9 +367,9 @@ export default component$(() => {
               </div>
             </>}
             {mapStore.sidebar === 'leaderboard' && <>
-              <div class="flex flex-col gap-2">
+              <div class="flex flex-col gap-1">
                 {leaderboard.value?.data?.leaderboard.map((entry: LeaderboardEntry) => (
-                  <div key={entry.uuid} class="flex items-center justify-between p-2 border-b border-gray-200">
+                  <div key={entry.uuid} class="lum-btn-p-2 lum-card flex-row rounded-lum-2 justify-between">
                     <div class="flex items-center gap-2">
                       <span class="font-bold">{entry.rank}.</span>
                       <img src={`https://mc-heads.net/head/${entry.uuid}`} alt={entry.username} class="rounded-lum-3" width={24} height={24} />

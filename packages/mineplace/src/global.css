@@ -1,13 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 
 @import "tailwindcss";
+@import "@luminescent/ui";
 
 @plugin "@anuragroy/tailwindcss-animate";
 
-@import "@luminescent/ui";
-
 @config "@luminescent/ui-qwik/config";
-@source "../node_modules/@luminescent/ui-qwik";
+@source "../../../node_modules/@luminescent/ui-qwik";
 
 @theme {
   --lum-default-alpha: 70;

@@ -1,7 +1,9 @@
 // src/components/Bluemap.tsx
-import { component$, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
+import { MapStoreContext } from '~/routes/index.js';
 
 export const Bluemap = component$((props: any) => {
+  const mapStore = useContext(MapStoreContext);
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     try {
@@ -36,6 +38,18 @@ export const Bluemap = component$((props: any) => {
       try {
         await load(container);
         console.log('BlueMap loaded successfully!');
+
+        // Listen to BlueMap events and update store
+        mapContainer.addEventListener('bluemapCameraMoved', (event: any) => {
+          // round position values
+          const { x, y, z } = event.detail.camera.position;
+          mapStore.position = {
+            x: Math.round(x),
+            y: Math.round(y),
+            z: Math.round(z),
+          };
+        });
+
       } catch (e) {
         console.error('Bluemap mount failed!', e);
       }
