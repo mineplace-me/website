@@ -10,5 +10,7 @@ COPY . .
 FROM base AS install
 RUN bun install --frozen-lockfile
 
+RUN bun run build
+
 # run the app
 CMD [ "bun", "serve" ]
