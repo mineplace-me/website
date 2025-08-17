@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-import * as Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import * as BlueMap from "./js/BlueMap";
 import {BlueMapApp} from "./js/BlueMapApp";
@@ -41,8 +41,10 @@ export async function load(el) {
     window.bluemap = bluemap;
     window.BlueMap = BlueMap;
 
+    await loadLanguageSettings()
+
     // init vue
-    const vue = Vue.createApp(App, {
+    const vue = createApp(App, {
       i18nModule,
       render: h => h(App)
     });
@@ -50,7 +52,6 @@ export async function load(el) {
 
     // load languages
     vue.use(i18nModule);
-    await loadLanguageSettings()
 
     // load bluemap next tick (to let the assets load first)
     const app = vue.mount(el);
@@ -60,7 +61,7 @@ export async function load(el) {
   } catch (e) {
     console.error("Failed to load BlueMap webapp!", e);
     document.body.innerHTML = `
-    <div id="bm-app-err">
+    <div id="bm-app-err" class="w-full h-full flex">
       <div>
         <img src="assets/logo.png" alt="bluemap logo">
         <div class="bm-app-err-main">Failed to load BlueMap webapp!</div>
