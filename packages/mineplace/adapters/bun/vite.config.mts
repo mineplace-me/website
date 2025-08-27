@@ -19,6 +19,8 @@ export default extendConfig(baseConfig, () => {
       bunServerAdapter({
         ssg: {
           include: ["/*"],
+          // Exclude dynamic live data JSON endpoint so it stays server-rendered
+          exclude: ["/world/live/players.json"],
           origin: "https://yoursite.dev",
           maxWorkers: 1, // Limit Workers to 1, otherwise SSG will hang when compiling Qwik City app with `bun run --bun build`.
         },
