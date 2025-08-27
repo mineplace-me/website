@@ -108,13 +108,12 @@ export const useServerApi = routeLoader$(async () => {
   try {
     const url = 'https://api.mineplace.me/api/leaderboard';
 
-    //add X-API-Key header
-
     const headers = new Headers();
     headers.append('X-API-Key', 'abcd');
 
     const response = await fetch(url, { headers });
     if (!response.ok) {
+      console.error('Failed to fetch leaderboard data:', response.statusText);
       throw new Error('Failed to fetch leaderboard data');
     }
 
