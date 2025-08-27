@@ -454,6 +454,7 @@ export class MapViewer {
 	}
 
 	updateLoadedMapArea = () => {
+		console.log(`[BlueMap] Loading map area at (${this.data.loadedCenter.x}, ${this.data.loadedCenter.y}), hiresViewDistance=${this.data.loadedHiresViewDistance}, lowresViewDistance=${this.data.loadedLowresViewDistance}`);
 		if (!this.map) return;
 		if (this.controlsManager.distance < 1000) {
 			this.map.loadMapArea(this.data.loadedCenter.x, this.data.loadedCenter.y, this.data.loadedHiresViewDistance, this.data.loadedLowresViewDistance);

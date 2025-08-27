@@ -26,8 +26,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import * as BlueMap from "./js/BlueMap";
-import {BlueMapApp} from "./js/BlueMapApp";
-import {i18nModule, loadLanguageSettings} from "./i18n";
+import { BlueMapApp } from "./js/BlueMapApp";
+import { i18nModule, loadLanguageSettings } from "./i18n";
 
 // utils
 String.prototype.includesCI = function (val) {
@@ -41,8 +41,37 @@ async function load(el) {
     window.bluemap = bluemap;
     window.BlueMap = BlueMap;
 
-    await loadLanguageSettings()
+    window.BlueMapBridge = {
+      setPerspectiveView: (transition = 250, minDistance = 5) => bluemap.setPerspectiveView?.(transition, minDistance),
+      setFlatView: (transition = 250, minDistance = 5) => bluemap.setFlatView?.(transition, minDistance),
+      setFreeFlight: (transition = 250, targetY) => bluemap.setFreeFlight?.(transition, targetY),
+      getMode: () => bluemap.appState?.controls?.state,
+      getPosition: () => ({ ...(bluemap.mapViewer?.controlsManager?.position || {}) }),
+      updateMap: () => bluemap.updateMap?.(),
+      setSuperSampling: (v) => { bluemap.mapViewer.data.superSampling = v; bluemap.mapViewer.redraw(); bluemap.saveUserSettings(); },
+      setHiresDistance: (v) => { bluemap.mapViewer.data.loadedHiresViewDistance = v; bluemap.mapViewer.updateLoadedMapArea(); bluemap.saveUserSettings(); },
+      setLowresDistance: (v) => { bluemap.mapViewer.data.loadedLowresViewDistance = v; bluemap.mapViewer.updateLoadedMapArea(); bluemap.saveUserSettings(); },
+      setMouseSensitivity: (v) => { bluemap.appState.controls.mouseSensitivity = v; bluemap.updateControlsSettings(); bluemap.saveUserSettings(); },
+      setInvertMouse: (flag) => { bluemap.appState.controls.invertMouse = flag; bluemap.updateControlsSettings(); bluemap.saveUserSettings(); },
+      setPauseTileLoading: (flag) => { bluemap.appState.controls.pauseTileLoading = flag; bluemap.saveUserSettings(); },
+      setChunkBorders: (flag) => { bluemap.setChunkBorders(flag); bluemap.saveUserSettings(); },
+      setDebug: (flag) => { bluemap.setDebug(flag); bluemap.saveUserSettings(); },
+      setSunlightStrength: (v) => { bluemap.mapViewer.data.uniforms.sunlightStrength.value = v; bluemap.mapViewer.redraw(); },
+      cycleSunlightStrength: () => { const cur = bluemap.mapViewer.data.uniforms.sunlightStrength.value; const next = cur >= 1 ? 0 : Math.min(1, +(cur + 0.1).toFixed(2)); bluemap.mapViewer.data.uniforms.sunlightStrength.value = next; bluemap.mapViewer.redraw(); },
+      getSettings: () => ({
+        superSampling: bluemap.mapViewer.data.superSampling,
+        hiresDistance: bluemap.mapViewer.data.loadedHiresViewDistance,
+        lowresDistance: bluemap.mapViewer.data.loadedLowresViewDistance,
+        mouseSensitivity: bluemap.appState.controls.mouseSensitivity,
+        invertMouse: bluemap.appState.controls.invertMouse,
+        pauseTileLoading: bluemap.appState.controls.pauseTileLoading,
+        showChunkBorders: bluemap.mapViewer.data.uniforms.chunkBorders.value,
+        showDebug: bluemap.appState.debug,
+        sunlightStrength: bluemap.mapViewer.data.uniforms.sunlightStrength.value,
+      }),
+    };
 
+    await loadLanguageSettings()
     // init vue
     const vue = createApp(App, {
       i18nModule,
@@ -57,6 +86,9 @@ async function load(el) {
     const app = vue.mount(el);
     await app.$nextTick();
     await bluemap.load();
+
+  // Signal readiness so host frontends can sync settings
+  window.dispatchEvent(new CustomEvent('bluemap:ready'));
 
   } catch (e) {
     console.error("Failed to load BlueMap webapp!", e);
@@ -75,10 +107,13 @@ async function load(el) {
 // Export for different module systems
 const exports = { load };
 
-// For CommonJS/Node.js
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = exports;
-}
+// For CommonJS/Node.js (only if module is defined in the runtime)
+/* global module */
+try {
+  if (typeof module !== 'undefined' && module?.exports) {
+    module.exports = exports;
+  }
+} catch (_) { /* ignore */ }
 
 // For ES modules
 export default exports;

@@ -341,7 +341,7 @@ export class BlueMapApp {
                 maxZoomDistance: 100000,
                 hiresSliderMax: 500,
                 hiresSliderDefault: 100,
-                hiresSliderMin: 0,
+                hiresSliderMin: 100,
                 lowresSliderMax: 7000,
                 lowresSliderDefault: 2000,
                 lowresSliderMin: 500,

@@ -153,16 +153,55 @@ export default component$(() => {
 
   const setViewMode = $((mode: 'flat' | 'perspective' | 'free') => {
     mapStore.viewMode = mode;
-    const command = mode === 'free' ? 'setFreeFlight'
-      : mode === 'perspective' ? 'setPerspectiveView'
-        : 'setFlatView';
-    mapRef.value?.contentWindow?.postMessage({
-      type: 'viewMode', command,
-      options: { transition: 500, heightTransition: 256 },
-    }, '*');
+    if (typeof window !== 'undefined') {
+      const bridge = (window as any).BlueMapBridge;
+      if (bridge) {
+        try {
+          const transition = 500;
+          switch (mode) {
+          case 'free':
+            bridge.setFreeFlight?.(transition);
+            break;
+          case 'perspective':
+            bridge.setPerspectiveView?.(transition);
+            break;
+          case 'flat':
+            bridge.setFlatView?.(transition);
+            break;
+          }
+        } catch (e) {
+          console.warn('Failed to switch BlueMap view mode:', e);
+        }
+      } else {
+        console.debug('BlueMapBridge not ready yet');
+      }
+    }
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
+    const syncFromBridge = () => {
+      const bridge = (window as any).BlueMapBridge;
+      if (!bridge || !bridge.getSettings) return;
+      try {
+        const s = bridge.getSettings();
+        mapStore.settings.superSampling = s.superSampling;
+        mapStore.settings.hiresDistance = s.hiresDistance;
+        mapStore.settings.lowresDistance = s.lowresDistance;
+        mapStore.settings.mouseSensitivity = s.mouseSensitivity;
+        mapStore.settings.invertMouse = s.invertMouse;
+        mapStore.settings.pauseTileLoading = s.pauseTileLoading;
+        mapStore.settings.showChunkBorders = s.showChunkBorders;
+        mapStore.settings.showDebug = s.showDebug;
+        mapStore.settings.sunlightStrength = s.sunlightStrength;
+      } catch (e) {
+        console.warn('Failed syncing settings from BlueMapBridge:', e);
+      }
+    };
+
+    window.addEventListener('bluemap:ready', syncFromBridge, { once: true });
+    // If it's already loaded before this runs
+    if ((window as any).BlueMapBridge?.getSettings) syncFromBridge();
     console.log('loaded');
     console.log('leaderboard info:', leaderboard.value);
     const players = await fetch('https://map.mineplace.me/maps/world/live/players.json');
@@ -309,9 +348,10 @@ export default component$(() => {
                 <Sun size={24} />
               </button>
               <button onClick$={() => {
-                mapRef?.value?.contentWindow?.postMessage({
-                  type: 'resetView',
-                }, '*');
+                if (typeof window !== 'undefined') {
+                  const bridge = (window as any).BlueMapBridge;
+                  bridge?.updateMap();
+                }
               }} class="lum-btn p-2 rounded-lum-2 lum-bg-transparent">
                 <RefreshCcw size={24} />
               </button>
@@ -383,41 +423,81 @@ export default component$(() => {
             {mapStore.sidebar === 'settings' && <>
               <div class="flex flex-col gap-2">
                 <NumberInput id="hiresDistance" class={{ 'w-20': true }} input value={mapStore.settings.hiresDistance}
-                  onIncrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance++}
-                  onDecrement$={() => mapStore.settings.hiresDistance && mapStore.settings.hiresDistance--}>
+                  onIncrement$={() => {
+                    if (mapStore.settings.hiresDistance != null) {
+                      mapStore.settings.hiresDistance++;
+                      (window as any).BlueMapBridge?.setHiresDistance(mapStore.settings.hiresDistance);
+                    }
+                  }}
+                  onDecrement$={() => {
+                    if (mapStore.settings.hiresDistance != null) {
+                      mapStore.settings.hiresDistance--;
+                      (window as any).BlueMapBridge?.setHiresDistance(mapStore.settings.hiresDistance);
+                    }
+                  }}>
                   <label class="text-sm">
                     High Resolution Render Distance
                   </label>
                 </NumberInput>
                 <NumberInput id="lowresDistance" class={{ 'w-20': true }} input value={mapStore.settings.lowresDistance}
-                  onIncrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance++}
-                  onDecrement$={() => mapStore.settings.lowresDistance && mapStore.settings.lowresDistance--}>
+                  onIncrement$={() => {
+                    if (mapStore.settings.lowresDistance != null) {
+                      mapStore.settings.lowresDistance++;
+                      (window as any).BlueMapBridge?.setLowresDistance(mapStore.settings.lowresDistance);
+                    }
+                  }}
+                  onDecrement$={() => {
+                    if (mapStore.settings.lowresDistance != null) {
+                      mapStore.settings.lowresDistance--;
+                      (window as any).BlueMapBridge?.setLowresDistance(mapStore.settings.lowresDistance);
+                    }
+                  }}>
                   <label class="text-sm">
                     Low Resolution Render Distance
                   </label>
                 </NumberInput>
                 <NumberInput id="mouseSensitivity" class={{ 'w-20': true }} input value={mapStore.settings.mouseSensitivity}
-                  onIncrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity++}
-                  onDecrement$={() => mapStore.settings.mouseSensitivity && mapStore.settings.mouseSensitivity--}>
+                  onIncrement$={() => {
+                    if (mapStore.settings.mouseSensitivity != null) {
+                      mapStore.settings.mouseSensitivity++;
+                      (window as any).BlueMapBridge?.setMouseSensitivity(mapStore.settings.mouseSensitivity);
+                    }
+                  }}
+                  onDecrement$={() => {
+                    if (mapStore.settings.mouseSensitivity != null) {
+                      mapStore.settings.mouseSensitivity--;
+                      (window as any).BlueMapBridge?.setMouseSensitivity(mapStore.settings.mouseSensitivity);
+                    }
+                  }}>
                   <label class="text-sm">
                     Mouse Sensitivity
                   </label>
                 </NumberInput>
                 <NumberInput id="superSampling" class={{ 'w-20': true }} input value={mapStore.settings.superSampling}
-                  onIncrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling++}
-                  onDecrement$={() => mapStore.settings.superSampling && mapStore.settings.superSampling--}>
+                  onIncrement$={() => {
+                    if (mapStore.settings.superSampling != null) {
+                      mapStore.settings.superSampling++;
+                      (window as any).BlueMapBridge?.setSuperSampling(mapStore.settings.superSampling);
+                    }
+                  }}
+                  onDecrement$={() => {
+                    if (mapStore.settings.superSampling != null) {
+                      mapStore.settings.superSampling--;
+                      (window as any).BlueMapBridge?.setSuperSampling(mapStore.settings.superSampling);
+                    }
+                  }}>
                   <label class="text-sm">
                     Supersampling
                   </label>
                 </NumberInput>
                 <Toggle id="pauseTileLoading" checked={mapStore.settings.pauseTileLoading}
-                  onChange$={(e, el) => mapStore.settings.pauseTileLoading = el.checked} label="Pause Tile Loading"/>
+                  onChange$={(e, el) => { mapStore.settings.pauseTileLoading = el.checked; (window as any).BlueMapBridge?.setPauseTileLoading(el.checked); }} label="Pause Tile Loading"/>
                 <Toggle id="invertMouse" checked={mapStore.settings.invertMouse}
-                  onChange$={(e, el) => mapStore.settings.invertMouse = el.checked} label="Invert Mouse"/>
+                  onChange$={(e, el) => { mapStore.settings.invertMouse = el.checked; (window as any).BlueMapBridge?.setInvertMouse(el.checked); }} label="Invert Mouse"/>
                 <Toggle id="showChunkBorders" checked={mapStore.settings.showChunkBorders}
-                  onChange$={(e, el) => mapStore.settings.showChunkBorders = el.checked} label="Show Chunk Borders"/>
+                  onChange$={(e, el) => { mapStore.settings.showChunkBorders = el.checked; (window as any).BlueMapBridge?.setChunkBorders(el.checked); }} label="Show Chunk Borders"/>
                 <Toggle id="showDebug" checked={mapStore.settings.showDebug}
-                  onChange$={(e, el) => mapStore.settings.showDebug = el.checked} label="Show Debug Info"/>
+                  onChange$={(e, el) => { mapStore.settings.showDebug = el.checked; (window as any).BlueMapBridge?.setDebug(el.checked); }} label="Show Debug Info"/>
               </div>
             </>}
           </div>

@@ -4,6 +4,12 @@ import { MapStoreContext } from '~/routes/index.js';
 
 export const Bluemap = component$((props: any) => {
   const mapStore = useContext(MapStoreContext);
+  // Expose simple functions on window for quick console testing (optional)
+  if (typeof window !== 'undefined') {
+    (window as any).bluemapSetPerspective = (t?: number, d?: number) => window.BlueMapBridge?.setPerspectiveView(t, d);
+    (window as any).bluemapSetFlat = (t?: number, d?: number) => window.BlueMapBridge?.setFlatView(t, d);
+    (window as any).bluemapSetFree = (t?: number, y?: number) => window.BlueMapBridge?.setFreeFlight(t, y);
+  }
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     try {
