@@ -5,6 +5,7 @@ import { generateHead } from '~/root';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { Bluemap } from '~/components/Bluemap';
 import QuartzDev from '~/components/QuartzDev';
+const Mineplace = '/branding/icon.svg';
 
 type LeaderboardResponse = {
   data: LeaderboardData;
@@ -229,8 +230,8 @@ export default component$(() => {
             void setViewMode('flat');
           }} />
         </button>
-        <div class="flex gap-4 items-center mb-6">
-          <Box size={64} />
+        <div class="flex gap-4 mb-6">
+          <img src={Mineplace} width={86} height={86} />
           <h1 class="text-5xl font-bold">
             Mineplace
             <a class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal" href="https://birdflop.com">
