@@ -737,11 +737,6 @@ export class BlueMapApp {
         }
 
         history.replaceState(undefined, undefined, hash);
-
-        document.title = i18n.t("pageTitle", {
-            map: this.mapViewer.map ? this.mapViewer.map.data.name : "?",
-            version: this.settings.version
-        });
     }
 
     loadPageAddress = async () => {

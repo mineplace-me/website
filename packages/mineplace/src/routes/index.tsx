@@ -5,6 +5,7 @@ import { generateHead } from '~/root';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { Bluemap } from '~/components/Bluemap';
 import QuartzDev from '~/components/QuartzDev';
+const Mineplace = '/branding/icon.svg';
 
 type LeaderboardResponse = {
   data: LeaderboardData;
@@ -61,19 +62,19 @@ export const viewModeOptions: {
   {
     value: 'flat',
     label: 'Flat View',
-    icon: Square,
+    icon: <Square />,
     description: 'The simple top-down view.\nScroll to zoom in and out.',
   },
   {
     value: 'perspective',
     label: 'Perspective View',
-    icon: Box,
+    icon: <Box />,
     description: '3d top-down perspective.\nUse the mouse and scroll to move around.',
   },
   {
     value: 'free',
     label: 'Free Flight',
-    icon: Rotate3D,
+    icon: <Rotate3D />,
     description: 'Move freely with a WASD and shift.\nScroll to control speed.',
   },
 ];
@@ -221,7 +222,7 @@ export default component$(() => {
       <div class={{
         'lum-card p-16 max-h-auto justify-center w-full backdrop-blur-xl': true,
         'rounded-none min-h-screen bg-gray-900': true,
-        'lg:rounded-lum lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 lg:w-auto lg:shadow-xl lg:shadow-gray-950/30 bg-gray-900/80': true,
+        'lg:rounded-lum lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 lg:w-auto lg:drop-shadow-xl bg-gray-900/80': true,
       }}>
         <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
           <X size={32} onClick$={() => {
@@ -229,8 +230,8 @@ export default component$(() => {
             void setViewMode('flat');
           }} />
         </button>
-        <div class="flex gap-4 items-center mb-6">
-          <Box size={64} />
+        <div class="flex gap-4 mb-6">
+          <img src={Mineplace} width={86} height={86} />
           <h1 class="text-5xl font-bold">
             Mineplace
             <a class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal" href="https://birdflop.com">
@@ -285,7 +286,7 @@ export default component$(() => {
     }}>
       <div class="flex-1 flex w-full lg:w-auto flex-col gap-2 items-start">
         <button class={{
-          'w-full lg:w-auto transition-all duration-400 hover:duration-400 lum-btn p-4 text-left flex-row items-center shadow-xl shadow-gray-950/30 backdrop-blur-lg cursor-pointer': true,
+          'w-full lg:w-auto transition-all duration-400 hover:duration-400 lum-btn p-4 text-left flex-row items-center drop-shadow-xl backdrop-blur-lg cursor-pointer': true,
           '-mt-10 opacity-0': !closed.value,
           'pointer-events-auto': closed.value,
         }} onClick$={() => closed.value = !closed.value}>
@@ -302,7 +303,7 @@ export default component$(() => {
         }}>
           <div>
             <div class={{
-              'lum-card transition-all duration-400 p-2 flex-col gap-1 shadow-xl shadow-gray-950/30 backdrop-blur-lg': true,
+              'lum-card transition-all duration-400 p-2 flex-col gap-1 drop-shadow-xl backdrop-blur-lg': true,
               'opacity-0': !closed.value,
               'pointer-events-auto': closed.value,
             }}>
@@ -358,7 +359,7 @@ export default component$(() => {
             </div>
           </div>
           <div class={{
-            'lum-card transition-all duration-300 p-4 flex-col gap-1 shadow-xl shadow-gray-950/30 backdrop-blur-lg -z-1': true,
+            'lum-card transition-all duration-300 p-4 flex-col gap-1 drop-shadow-xl backdrop-blur-lg -z-1': true,
             'opacity-0 -ml-[100%]': !closed.value || !sidebarOpen.value,
             'pointer-events-auto': closed.value,
             'min-w-68': sidebarOpen.value,
@@ -491,13 +492,33 @@ export default component$(() => {
                   </label>
                 </NumberInput>
                 <Toggle id="pauseTileLoading" checked={mapStore.settings.pauseTileLoading}
-                  onChange$={(e, el) => { mapStore.settings.pauseTileLoading = el.checked; (window as any).BlueMapBridge?.setPauseTileLoading(el.checked); }} label="Pause Tile Loading"/>
+                  onChange$={(e, el) => {
+                    mapStore.settings.pauseTileLoading = el.checked;
+                    (window as any).BlueMapBridge?.setPauseTileLoading(el.checked);
+                  }}>
+                  Pause Tile Loading
+                </Toggle>
                 <Toggle id="invertMouse" checked={mapStore.settings.invertMouse}
-                  onChange$={(e, el) => { mapStore.settings.invertMouse = el.checked; (window as any).BlueMapBridge?.setInvertMouse(el.checked); }} label="Invert Mouse"/>
+                  onChange$={(e, el) => {
+                    mapStore.settings.invertMouse = el.checked;
+                    (window as any).BlueMapBridge?.setInvertMouse(el.checked);
+                  }}>
+                  Invert Mouse
+                </Toggle>
                 <Toggle id="showChunkBorders" checked={mapStore.settings.showChunkBorders}
-                  onChange$={(e, el) => { mapStore.settings.showChunkBorders = el.checked; (window as any).BlueMapBridge?.setChunkBorders(el.checked); }} label="Show Chunk Borders"/>
+                  onChange$={(e, el) => {
+                    mapStore.settings.showChunkBorders = el.checked;
+                    (window as any).BlueMapBridge?.setChunkBorders(el.checked);
+                  }}>
+                  Show Chunk Borders
+                </Toggle>
                 <Toggle id="showDebug" checked={mapStore.settings.showDebug}
-                  onChange$={(e, el) => { mapStore.settings.showDebug = el.checked; (window as any).BlueMapBridge?.setDebug(el.checked); }} label="Show Debug Info"/>
+                  onChange$={(e, el) => {
+                    mapStore.settings.showDebug = el.checked;
+                    (window as any).BlueMapBridge?.setDebug(el.checked);
+                  }}>
+                  Show Debug Info
+                </Toggle>
               </div>
             </>}
           </div>
@@ -506,7 +527,7 @@ export default component$(() => {
       <div class="flex-1 lg:hidden"></div>
       <div class="flex lg:flex-1 gap-2 justify-center w-full">
         <div class={{
-          'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
+          'flex flex-row items-center transition-all duration-400 lum-card p-2 drop-shadow-xl backdrop-blur-lg gap-2': true,
           '-mt-10 opacity-0': !closed.value,
           'pointer-events-auto': closed.value,
         }}>
@@ -521,7 +542,7 @@ export default component$(() => {
             }} />
         </div>
         <div class={{
-          'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
+          'flex flex-row items-center transition-all duration-400 lum-card p-2 drop-shadow-xl backdrop-blur-lg gap-2': true,
           '-mt-10 opacity-0': !closed.value,
           'pointer-events-auto': closed.value,
         }}>
@@ -536,7 +557,7 @@ export default component$(() => {
             }} />
         </div>
         <div class={{
-          'flex flex-row items-center transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-2': true,
+          'flex flex-row items-center transition-all duration-400 lum-card p-2 drop-shadow-xl backdrop-blur-lg gap-2': true,
           '-mt-10 opacity-0': !closed.value,
           'pointer-events-auto': closed.value,
         }}>
@@ -557,39 +578,46 @@ export default component$(() => {
           'pointer-events-auto': closed.value,
         }}>
           <div class={{
-            'flex w-full transition-all duration-400 lum-card p-2 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
+            'flex w-full transition-all duration-400 lum-card p-2 drop-shadow-xl backdrop-blur-lg gap-1': true,
             '-mt-10 opacity-0': !closed.value,
           }}>
             <SocialButtons />
           </div>
           <SelectMenuRaw align='right' class={{
-            'hidden lg:flex transition-all duration-400 shadow-xl shadow-gray-950/30 backdrop-blur-lg gap-1': true,
+            'hidden lg:flex transition-all duration-400 drop-shadow-xl backdrop-blur-lg gap-1': true,
             'opacity-0': !closed.value,
-          }} value={mapStore.viewMode} values={viewModeOptions.map(option => {
-            return {
-              name: (
-                <div class="flex items-center gap-2 text-left">
-                  <div
-                    class={'h-8 w-8 rounded-full flex items-center justify-center'}
-                  >
-                    -
+          }} value={mapStore.viewMode} customDropdown>
+            {viewModeOptions.map(({ value, ...option }) => {
+              const innerContent = <>
+                <div
+                  class={'h-8 w-8 rounded-full flex items-center justify-center'}
+                >
+                  {option.icon}
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">
+                    {option.label}
                   </div>
-                  <div class="flex-1">
-                    <div class="text-sm font-medium">
-                      {option.label}
-                    </div>
-                    <div class="text-xs whitespace-pre-wrap">
-                      {option.description}
-                    </div>
+                  <div class="text-xs whitespace-pre-wrap">
+                    {option.description}
                   </div>
                 </div>
-              ),
-              value: option.value,
-            };
-          })}
-          onChange$={(e, el) => {
-            void setViewMode(el.value as MapStore['viewMode']);
-          }}>
+              </>;
+
+              if (mapStore.viewMode == value) {
+                return <div q:slot={'dropdown'} key={value}
+                  class="flex items-center gap-2 text-left">
+                  {innerContent}
+                </div>;
+              }
+              else {
+                return <button q:slot={'extra-buttons'} key={value}
+                  class="lum-btn text-left rounded-lum-1 lum-bg-transparent"
+                  onClick$={() => void setViewMode(value)}>
+                  {innerContent}
+                </button>;
+              }
+            })}
           </SelectMenuRaw>
         </div>
       </div>
