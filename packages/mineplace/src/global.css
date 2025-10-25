@@ -11,6 +11,8 @@
 @theme {
   --lum-default-alpha: 70;
   --lum-border-radius: 1rem;
+  --lum-depth: 1;
+  --color-lum-accent: var(--color-purple-500);
   --color-gray-50: oklch(98.5% 0.002 278.839);
   --color-gray-100: oklch(96.7% 0.003 295.542);
   --color-gray-200: oklch(92.8% 0.006 295.531);
