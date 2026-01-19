@@ -1,4 +1,4 @@
-![Mineplace Logo](https://mineplace.me/branding/icon.png)
+<img src="https://mineplace.me/branding/icon.png" width="128">
 
 # Mineplace Website
 
