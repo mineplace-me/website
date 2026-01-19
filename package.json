@@ -1,9 +1,6 @@
 {
   "name": "mineplace-monorepo",
   "private": true,
-  "engines": {
-    "node": ">=23.11.0"
-  },
   "scripts": {
     "build": "cd packages/bluemap && bun run build && cd ../mineplace && bun run build",
     "start": "cd packages/bluemap && bun run build && cd ../mineplace && bun run start",

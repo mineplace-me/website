@@ -1,65 +1,22 @@
-# Qwik City App ⚡️
+![Mineplace Logo](https://mineplace.me/branding/icon.png)
 
-- [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+# Mineplace Website
 
----
+This repository contains the source code for the Mineplace website
 
-## Project Structure
+# Contributing
+#### All contributions are welcome. Mineplace is an open-source project, and we encourage developers of all skill levels to contribute. Whether you're fixing bugs, adding new features, or improving documentation, your help is appreciated!
 
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
+## Setting up a Local Development Environment
+To contribute to the Mineplace website, you'll need to set up a local development environment.
 
-Inside your project, you'll see the following directory structure:
+### Prerequisites
+- **bun** JavaScript runtime (https://bun.sh/)
 
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
-```
+### Steps to Set Up
+1. **Clone the Repository**: Fork the Mineplace website repository on GitHub https://github.com/mineplace-me/website and clone it
+2. **Install Dependencies**: Navigate to the project directory and run `bun install` to install all necessary dependencies.
+3. **Run the Development Server**: Start the development server with `bun run start`. The website should now be accessible at `http://localhost:5173`.
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
-
-- `src/components`: Recommended directory for components.
-
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
-
-## Add Integrations and deployment
-
-Use the `pnpm qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
-
-```shell
-pnpm qwik add # or `pnpm qwik add`
-```
-
-## Development
-
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
-
-```shell
-npm start # or `pnpm start`
-```
-
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
-
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-pnpm preview # or `pnpm preview`
-```
-
-## Production
-
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
-
-```shell
-pnpm build # or `pnpm build`
-```
+### What is happening under the hood?
+The project uses Bluemap as its map rendering engine and Mineplace as its web framework. The build process involves compiling Bluemap first and then Mineplace, Bluemap is a Vue app nested within the Mineplace project structure and communicates with Mineplace to provide map data and other functionalities.
