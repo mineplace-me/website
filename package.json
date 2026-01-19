@@ -8,9 +8,9 @@
   },
   "type": "module",
   "devDependencies": {
-    "@nx/js": "^22.0.1",
-    "nx": "22.0.1",
-    "tsx": "^4.20.6",
+    "@nx/js": "^22.3.3",
+    "nx": "22.3.3",
+    "tsx": "^4.21.0",
     "yargs": "^18.0.0"
   },
   "workspaces": [
