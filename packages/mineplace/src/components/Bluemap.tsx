@@ -1,5 +1,5 @@
 // src/components/Bluemap.tsx
-import { component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useContext, useVisibleTask$ } from '@qwik.dev/core';
 import { MapStoreContext } from '~/routes/index.js';
 
 export const Bluemap = component$((props: any) => {
@@ -14,7 +14,7 @@ export const Bluemap = component$((props: any) => {
   useVisibleTask$(async () => {
     try {
       // Load the BlueMap UMD file
-      await import('../../../bluemap/dist/bluemap.umd.js');
+      await import('bluemap');
 
       // Access the global export
       const bluemapModule = (window as any).BlueMapModule;

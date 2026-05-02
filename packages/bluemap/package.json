@@ -1,7 +1,10 @@
 {
   "name": "bluemap",
   "version": "0.0.0",
-  "private": true,
+  "description": "Bluemap website for Mineplace",
+  "exports": {
+    ".": "./dist/bluemap.umd.js"
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

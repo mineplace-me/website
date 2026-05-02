@@ -5,26 +5,25 @@
 
 @plugin "@anuragroy/tailwindcss-animate";
 
-@config "@luminescent/ui-qwik/config";
 @source "../../../node_modules/@luminescent/ui-qwik";
 
 @theme {
   --lum-default-alpha: 70;
   --lum-border-radius: 1rem;
   --lum-depth: 1;
-  --color-lum-accent: var(--color-purple-500);
-  --color-gray-50: oklch(98.5% 0.002 278.839);
-  --color-gray-100: oklch(96.7% 0.003 295.542);
-  --color-gray-200: oklch(92.8% 0.006 295.531);
-  --color-gray-300: oklch(87.2% 0.01 289.338);
-  --color-gray-400: oklch(70.7% 0.022 292.325);
-  --color-gray-500: oklch(55.1% 0.027 295.364);
-  --color-gray-600: oklch(44.6% 0.03 287.802);
-  --color-gray-700: oklch(37.3% 0.034 290.733);
-  --color-gray-800: oklch(27.8% 0.033 287.848);
-  --color-gray-850: oklch(23.2% 0.03 290.733);
-  --color-gray-900: oklch(21% 0.034 295.665);
-  --color-gray-950: oklch(13% 0.028 292.692);
+  --font-display: "Figtree", "sans-serif";
+  --color-lum-accent: var(--color-amber-500);
+  --color-gray-50:    oklch(98.5% 0.0021 36);
+  --color-gray-100:   oklch(96.7% 0.003  53);
+  --color-gray-200:   oklch(92.8% 0.006  47);
+  --color-gray-300:   oklch(87.2% 0.008  50);
+  --color-gray-400:   oklch(70.7% 0.012  53);
+  --color-gray-500:   oklch(55.1% 0.015  45);
+  --color-gray-600:   oklch(44.6% 0.016  48);
+  --color-gray-700:   oklch(37.3% 0.018  45);
+  --color-gray-800:   oklch(27.8% 0.018  48);
+  --color-gray-900:   oklch(21%   0.018  53);
+  --color-gray-950:   oklch(13%   0.015  50);
   --color-green: var(--color-green-900);
   --color-red: var(--color-red-900);
   --color-orange: var(--color-orange-900);
@@ -60,7 +59,7 @@
     --color-lum-card-bg: var(--color-gray-50);
     --color-lum-input-bg: var(--color-gray-100);
     --color-lum-input-hover-bg: var(--color-gray-200);
-    --color-lum-accent: var(--color-blue-500);
+    --color-lum-accent: var(--color-amber-500);
     --color-lum-text: var(--color-gray-900);
     --color-lum-text-secondary: var(--color-gray-600);
   }
@@ -77,7 +76,8 @@
   font-family: MinecraftOfficial, sans-serif;
 }
 
-a.lum-btn, a.lum-card {
+a.lum-btn,
+a.lum-card {
   color: var(--color-text) !important;
   text-decoration: none;
 }
@@ -119,7 +119,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -168,7 +168,7 @@ input[type=number] {
       left: 50%;
       transform: translate(-50%, 0);
 
-      content: '';
+      content: "";
       border: solid 0.5em transparent;
       @apply border-t-gray-900/20;
     }
@@ -178,9 +178,7 @@ input[type=number] {
     line-height: 1.2em;
 
     .group {
-
       &[data-tooltip] {
-
         position: relative;
 
         pointer-events: auto;
@@ -206,13 +204,12 @@ input[type=number] {
           filter: drop-shadow(1px 1px 3px #0008);
           font-size: 0.75em;
           line-height: 1em;
-          padding: .5em;
+          padding: 0.5em;
         }
 
         &:active {
           background-color: var(--theme-bg-light);
         }
-
       }
 
       > .label {
@@ -280,7 +277,6 @@ input[type=number] {
     }
   }
 }
-
 
 #map-container {
   position: absolute;

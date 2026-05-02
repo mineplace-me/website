@@ -1,10 +1,10 @@
-import { component$, isDev } from '@builder.io/qwik';
+import { component$ } from '@qwik.dev/core';
 import {
   DocumentHead,
   DocumentHeadValue,
-  QwikCityProvider,
+  QwikRouterProvider,
   RouterOutlet,
-} from '@builder.io/qwik-city';
+} from '@qwik.dev/router';
 import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
@@ -18,15 +18,10 @@ export default component$(() => {
    */
 
   return (
-    <QwikCityProvider>
+    <QwikRouterProvider>
       <head>
         <meta charset="utf-8" />
-        {!isDev && (
-          <link
-            rel="manifest"
-            href={`${import.meta.env.BASE_URL}manifest.json`}
-          />
-        )}
+        <link rel="manifest" href="/manifest.json" />
         <script
           defer
           src="https://umami.bwmp.dev/script.js"
@@ -37,7 +32,7 @@ export default component$(() => {
       <body lang="en" class="text-lum-text">
         <RouterOutlet />
       </body>
-    </QwikCityProvider>
+    </QwikRouterProvider>
   );
 });
 

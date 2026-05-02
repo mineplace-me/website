@@ -1,4 +1,4 @@
-import { component$, PropsOf } from '@builder.io/qwik';
+import { component$, PropsOf } from '@qwik.dev/core';
 
 export default component$(({ ...props }: PropsOf<'svg'>) => (
   <svg {...props} viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"

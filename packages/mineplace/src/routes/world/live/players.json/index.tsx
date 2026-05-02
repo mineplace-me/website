@@ -1,4 +1,4 @@
-import { RequestHandler } from '@builder.io/qwik-city';
+import { RequestHandler } from '@qwik.dev/router';
 
 type Player = {
   uuid: string;
