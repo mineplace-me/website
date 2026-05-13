@@ -297,7 +297,7 @@ export default component$(() => {
             <h1 class="text-5xl font-bold">
               Mineplace
               <a
-                class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal"
+                class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal text-lum-text-secondary"
                 href="https://birdflop.com"
               >
                 <Birdflop size={20} />
@@ -307,11 +307,11 @@ export default component$(() => {
           </div>
 
           <p class="text-xl lg:text-4xl mb-6 font-minecraft">
-            Now imagine if r/place was 3D.
+            From pixels to worlds.
           </p>
 
-          <div class="text-xs lg:text-base">
-            <p class="text-xl font-bold">Rules</p>
+          <div class="text-xs lg:text-base text-lum-text-secondary">
+            <p class="text-xl font-bold text-lum-text">Rules</p>
             <p>
               😈 Do not paint over other artworks using random colors or
               patterns just to mess things up
