@@ -9,15 +9,16 @@ import {
 } from '@qwik.dev/core';
 import {
   Box,
+  Map,
   Network,
   RefreshCcw,
   Rotate3D,
+  Scale,
   Settings,
   Square,
   Sun,
   Trophy,
   Users,
-  X,
 } from 'lucide-icons-qwik';
 import { SiDiscord, SiGithub } from 'simple-icons-qwik';
 import { Luminescent, Birdflop } from '@luminescent/icons-qwik';
@@ -26,6 +27,7 @@ import { generateHead } from '~/root';
 import { routeLoader$ } from '@qwik.dev/router';
 import { Bluemap } from '~/components/Bluemap';
 import QuartzDev from '~/components/QuartzDev';
+import Accordion from '~/components/Accordion';
 const Mineplace = '/branding/icon.svg';
 
 type LeaderboardResponse = {
@@ -102,11 +104,16 @@ export const viewModeOptions: {
 ];
 
 export const SocialButtons = component$(() => (
-  <div class="flex flex-col lg:flex-row gap-2">
-    <button class="lum-btn rounded-lum-2 w-full font-minecraft border-gray-500 border-2 hover:border-2 hover:lum-bg-gray-500 cursor-pointer">
-      <Network size={24} />
-      IP: play.mineplace.me
-    </button>
+  <div class="flex flex-col sm:flex-row gap-2">
+    <div class="relative group">
+      <p class="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap lum-btn rounded-lum-2 text-xs font-minecraft opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        Bedrock Port: 19132
+      </p>
+      <button class="lum-btn rounded-lum-2 w-full font-minecraft border-gray-500 border-2 hover:border-2 hover:lum-bg-gray-500 cursor-pointer">
+        <Network size={20} />
+        IP: play.mineplace.me
+      </button>
+    </div>
     <div class="flex flex-1 justify-evenly gap-1 mt-2 lg:mt-0">
       <a
         class="lum-btn rounded-lum-2 p-2 lum-bg-transparent fill-current"
@@ -278,24 +285,17 @@ export default component$(() => {
       >
         <div
           class={{
-            'lum-card p-16 max-h-auto justify-center w-full backdrop-blur-xl': true,
-            'rounded-none min-h-screen bg-gray-900': true,
-            'lg:rounded-lum lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 lg:w-auto lg:drop-shadow-xl bg-gray-900/80': true,
+            'lum-card lum-grad-bg-gray-900 p-16 max-h-auto justify-center w-full backdrop-blur-xl': true,
+            'rounded-none min-h-screen': true,
+            'lg:rounded-lum lg:min-h-auto lg:animate-in lg:fade-in lg:slide-in-from-top-6 lg:anim-duration-1000 lg:w-auto lg:drop-shadow-xl lg:lum-grad-bg-gray-900/80': true,
           }}
         >
-          <button class="absolute top-10 right-10 lum-btn p-2 lum-bg-transparent">
-            <X
-              size={32}
-              onClick$={() => {
-                closed.value = !closed.value;
-                void setViewMode('flat');
-              }}
-            />
-          </button>
-          <div class="flex gap-4 mb-6">
-            <img src={Mineplace} width={86} height={86} />
-            <h1 class="text-5xl font-bold">
-              Mineplace
+          <div class="flex flex-col lg:flex-row items-center gap-4 mb-6">
+            <img src={Mineplace} width={88} height={88} class="w-50 h-50 lg:w-22 lg:h-22" />
+            <div class="flex flex-col gap-1 items-center lg:items-start">
+              <h1 class="text-5xl font-bold flex-1">
+                Mineplace
+              </h1>
               <a
                 class="text-lg flex items-center gap-1 mt-2 hover:underline font-normal text-lum-text-secondary"
                 href="https://birdflop.com"
@@ -303,47 +303,81 @@ export default component$(() => {
                 <Birdflop size={20} />
                 Powered by Birdflop Hosting
               </a>
-            </h1>
-          </div>
-
-          <p class="text-xl lg:text-4xl mb-6 font-minecraft">
-            From pixels to worlds.
-          </p>
-
-          <div class="text-xs lg:text-base text-lum-text-secondary">
-            <p class="text-xl font-bold text-lum-text">Rules</p>
-            <p>
-              😈 Do not paint over other artworks using random colors or
-              patterns just to mess things up
-            </p>
-            <p>🔞 No +18 or hate group related paintings</p>
-            <p>🔗 Do not reference inappropriate websites</p>
-            <p>🧑‍🤝‍🧑 Do not paint with more than one account</p>
-            <p>🤖 Use of bots is not allowed</p>
-            <p>
-              🙅 Disclosing other user's personal information is not allowed
-            </p>
-            <p>
-              ✅ Painting over other artworks to complement them or create a new
-              drawing is allowed
-            </p>
-            <p>
-              ✅ Griefing political party flags or portraits of politicians is
-              allowed
+            </div>
+            <p class="text-3xl font-minecraft text-right">
+              From pixels<br/>
+              <span style="background: linear-gradient(to bottom right, rgb(84, 218, 244), rgb(84, 94, 182)) padding-box text;" class="text-transparent bg-clip-text">
+                to worlds.
+              </span>
             </p>
           </div>
 
-          <p>
-            Mineplace supports Java and Bedrock Edition!
-            <br />
-            Bedrock Port: 19132
+          <div class="flex flex-col gap-1 max-w-xl mx-auto">
+            <p class="flex items-center gap-2 mb-2 text-xl font-bold">
+              <Scale />
+              Rules
+            </p>
+            <Accordion class="w-full lum-bg-transparent rounded-lum-2">
+              <span q:slot="label">
+                1. Inappropriate content
+              </span>
+              <p>
+                The following content is not allowed and may result in a ban:
+              </p>
+              <ul class="text-lum-text-secondary list-disc list-inside">
+                <li>Explicit sexual content (genitalia, sexual acts, sexual fluids)</li>
+                <li>Sexualization of minors or fictitious characters with child-like visual traits, regardless of their fictional age or lore</li>
+                <li>Hate speech, extreme slurs, symbols of hate</li>
+                <li>Doxxing or sharing of personal information of others</li>
+              </ul>
+            </Accordion>
+            <Accordion class="w-full lum-bg-transparent rounded-lum-2">
+              <span q:slot="label">
+                2. Griefing
+              </span>
+              <p>
+                Griefing or any form of harassment towards other players is strictly prohibited. for example:
+              </p>
+              <ul class="text-lum-text-secondary list-disc list-inside">
+                <li>Destruction of other players' builds</li>
+                <li>Placing blocks that obstruct other players' builds</li>
+              </ul>
+            </Accordion>
+            <Accordion class="w-full lum-bg-transparent rounded-lum-2">
+              <span q:slot="label">
+                3. Automation
+              </span>
+              <p>
+                The use of bots, macros, or any form of client-side automation is prohibited. This includes:
+              </p>
+              <ul class="text-lum-text-secondary list-disc list-inside">
+                <li>Alt accounts</li>
+                <li>Baritone</li>
+                <li>Mineflayer</li>
+              </ul>
+              <p>
+                Mods such as Litematica that are used for outlining builds are allowed.
+              </p>
+            </Accordion>
+          </div>
+
+          <button class="lum-btn lum-btn-p-4 rounded-lum-2 lum-grad-bg-gray-500 hover:lum-grad-bg-gray-400 my-6 mx-auto" onClick$={() => {
+            closed.value = !closed.value;
+            void setViewMode('flat');
+          }}>
+            <Map size={24} />
+            Open Map
+          </button>
+
+          <p class="text-lum-text-secondary">
+            Mineplace supports both Java and Bedrock Edition!
           </p>
           <SocialButtons />
         </div>
       </div>
       <div
         class={{
-          'fixed flex flex-col lg:flex-row gap-2 w-full inset-2 pr-4 items-start justify-between pointer-events-none': true,
+          'fixed flex flex-col sm:flex-row gap-2 w-full inset-2 pr-4 items-start justify-between pointer-events-none': true,
         }}
       >
         <div class="flex-1 flex w-full lg:w-auto flex-col gap-2 items-start">
@@ -710,7 +744,7 @@ export default component$(() => {
               'pointer-events-auto': closed.value,
             }}
           >
-            <label for="x" class="px-2 font-bold text-xl text-red-300">
+            <label for="x" class="pl-3 pr-2 font-bold text-xl text-red-300">
               x
             </label>
             <input
@@ -732,7 +766,7 @@ export default component$(() => {
               'pointer-events-auto': closed.value,
             }}
           >
-            <label for="x" class="px-2 font-bold text-xl text-green-300">
+            <label for="y" class="pl-3 pr-2 font-bold text-xl text-green-300">
               y
             </label>
             <input
@@ -754,7 +788,7 @@ export default component$(() => {
               'pointer-events-auto': closed.value,
             }}
           >
-            <label for="x" class="px-2 font-bold text-xl text-blue-300">
+            <label for="z" class="pl-3 pr-2 font-bold text-xl text-blue-300">
               z
             </label>
             <input
