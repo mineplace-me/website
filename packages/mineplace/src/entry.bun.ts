@@ -20,7 +20,7 @@ const { router, notFound, staticFile } = createQwikRouter({
 });
 
 // Allow for dynamic port
-const port = Number(3000);
+const port = Number(Bun.env.PORT ?? 3000);
 
 console.log(`Server started: http://localhost:${port}/`);
 
