@@ -1,5 +1,5 @@
 import { component$, PropsOf, QRL, Slot, useSignal } from '@qwik.dev/core';
-import { Dropdown, getClassObject } from '@luminescent/ui-qwik';
+import { DropdownButton, getClassObject } from '@luminescent/ui-qwik';
 
 interface AccordionProps extends PropsOf<'button'> {
   pcOnly?: boolean;
@@ -12,7 +12,7 @@ export default component$(
 
     return (
       <>
-        <Dropdown
+        <DropdownButton
           class={{
             'hidden sm:flex': !!pcOnly,
             ...getClassObject(className),
@@ -25,14 +25,13 @@ export default component$(
           }}
         >
           <Slot name="label" />
-        </Dropdown>
+        </DropdownButton>
         <div
           class={{
             'flex flex-col gap-2 transition-all duration-400': true,
             'pointer-events-none max-h-0 opacity-0': !isOpen.value,
             'pointer-events-auto max-h-64 opacity-100': isOpen.value,
           }}
-          id="decode"
         >
           <Slot />
         </div>
