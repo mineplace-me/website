@@ -14,7 +14,7 @@ type Player = {
     yaw: number;
     roll: number;
   };
-}
+};
 
 const playersJSON = {
   players: [] as Player[],
@@ -25,7 +25,9 @@ export const onGet: RequestHandler = async ({ json }) => {
   // get live data if not cached
   if (playersJSON.lastUpdated < Date.now() - 1000) {
     console.log('Fetching live players data...', playersJSON.lastUpdated);
-    const liveData = await fetch('https://r2.mineplace.me/world/live/players.json');
+    const liveData = await fetch(
+      'https://r2.mineplace.me/world/live/players.json'
+    );
     const players: Player[] = await liveData.json();
 
     playersJSON.players = players;

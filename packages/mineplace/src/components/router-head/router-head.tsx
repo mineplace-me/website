@@ -14,7 +14,12 @@ export const RouterHead = component$(() => {
       <meta content={`${head.title}`} property="og:title" />
       <meta content="#54a5da" name="theme-color" />
       <meta content="/branding/icon.png" property="og:image" />
-      <link rel="preload" as="font" href="/MinecraftOfficial.ttf" crossOrigin="anonymous" />
+      <link
+        rel="preload"
+        as="font"
+        href="/MinecraftOfficial.ttf"
+        crossOrigin="anonymous"
+      />
 
       <link rel="canonical" href={loc.url.href} />
       <link rel="icon" type="image/svg" href="/branding/icon.svg" />

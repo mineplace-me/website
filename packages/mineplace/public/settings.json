@@ -13,9 +13,7 @@
   "lowresSliderMin": 500,
   "mapDataRoot": "https://r2.mineplace.me",
   "liveDataRoot": "",
-  "maps": [
-    "world"
-  ],
+  "maps": ["world"],
   "scripts": [],
   "styles": []
 }

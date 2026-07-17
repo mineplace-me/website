@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "ES2020",
-    "module": "ES2022",
+    "target": "es2020",
+    "module": "esnext",
     "lib": ["es2022", "DOM", "WebWorker", "DOM.Iterable"],
     "jsx": "react-jsx",
     "jsxImportSource": "@qwik.dev/core",
@@ -17,11 +17,12 @@
     "isolatedModules": true,
     "outDir": "tmp",
     "noEmit": true,
-    "types": ["bun", "eslint", "vite/client"],
+    "types": ["bun", "vite/client"],
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["./src/*"]
     },
+    /* if you do not use CSS modules, remove this line and delete the typescript-plugin-css-modules module from package.json */
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "exclude": ["**/dist"],
-  "include": ["src", "./*.d.ts", "./*.config.ts", "../vite.config.ts"],
+  "include": ["src", "./*.d.ts", "./*.config.ts"]
 }

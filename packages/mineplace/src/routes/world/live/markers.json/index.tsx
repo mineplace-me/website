@@ -9,7 +9,9 @@ export const onGet: RequestHandler = async ({ json }) => {
   // get live data if not cached
   if (markersJSON.lastUpdated < Date.now() - 5000) {
     console.log('Fetching live markers data...', markersJSON.lastUpdated);
-    const liveData = await fetch('https://r2.mineplace.me/world/live/markers.json');
+    const liveData = await fetch(
+      'https://r2.mineplace.me/world/live/markers.json'
+    );
     const markers: any = await liveData.json();
 
     markersJSON.markers = markers;

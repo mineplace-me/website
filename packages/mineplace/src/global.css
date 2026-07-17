@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
-@import "tailwindcss";
-@import "@luminescent/ui";
+@import 'tailwindcss';
+@import '@luminescent/ui';
 
 @plugin "@anuragroy/tailwindcss-animate";
 
@@ -11,18 +11,18 @@
   --lum-default-alpha: 70;
   --lum-border-radius: 1rem;
   --lum-depth: 1;
-  --font-display: "Figtree", "sans-serif";
-  --color-gray-50:    var(--color-mauve-50);
-  --color-gray-100:   var(--color-mauve-100);
-  --color-gray-200:   var(--color-mauve-200);
-  --color-gray-300:   var(--color-mauve-300);
-  --color-gray-400:   var(--color-mauve-400);
-  --color-gray-500:   var(--color-mauve-500);
-  --color-gray-600:   var(--color-mauve-600);
-  --color-gray-700:   var(--color-mauve-700);
-  --color-gray-800:   var(--color-mauve-800);
-  --color-gray-900:   var(--color-mauve-900);
-  --color-gray-950:   var(--color-mauve-950);
+  --font-display: 'Figtree', 'sans-serif';
+  --color-gray-50: var(--color-mauve-50);
+  --color-gray-100: var(--color-mauve-100);
+  --color-gray-200: var(--color-mauve-200);
+  --color-gray-300: var(--color-mauve-300);
+  --color-gray-400: var(--color-mauve-400);
+  --color-gray-500: var(--color-mauve-500);
+  --color-gray-600: var(--color-mauve-600);
+  --color-gray-700: var(--color-mauve-700);
+  --color-gray-800: var(--color-mauve-800);
+  --color-gray-900: var(--color-mauve-900);
+  --color-gray-950: var(--color-mauve-950);
   --color-lum-card-bg: --alpha(var(--color-gray-900) / 70%);
   --color-lum-input-bg: --alpha(var(--color-gray-900) / 70%);
   --color-lum-accent: var(--color-mauve-500);
@@ -120,7 +120,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -169,7 +169,7 @@ input[type="number"] {
       left: 50%;
       transform: translate(-50%, 0);
 
-      content: "";
+      content: '';
       border: solid 0.5em transparent;
       @apply border-t-gray-900/20;
     }
@@ -266,8 +266,8 @@ input[type="number"] {
       transition: opacity 0.3s;
     }
 
-    &[distance-data="med"],
-    &[distance-data="far"] {
+    &[distance-data='med'],
+    &[distance-data='far'] {
       img {
         width: 16px;
       }

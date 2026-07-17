@@ -6,11 +6,14 @@ export const Bluemap = component$((props: any) => {
   const mapStore = useContext(MapStoreContext);
   // Expose simple functions on window for quick console testing (optional)
   if (typeof window !== 'undefined') {
-    (window as any).bluemapSetPerspective = (t?: number, d?: number) => window.BlueMapBridge?.setPerspectiveView(t, d);
-    (window as any).bluemapSetFlat = (t?: number, d?: number) => window.BlueMapBridge?.setFlatView(t, d);
-    (window as any).bluemapSetFree = (t?: number, y?: number) => window.BlueMapBridge?.setFreeFlight(t, y);
+    (window as any).bluemapSetPerspective = (t?: number, d?: number) =>
+      window.BlueMapBridge?.setPerspectiveView(t, d);
+    (window as any).bluemapSetFlat = (t?: number, d?: number) =>
+      window.BlueMapBridge?.setFlatView(t, d);
+    (window as any).bluemapSetFree = (t?: number, y?: number) =>
+      window.BlueMapBridge?.setFreeFlight(t, y);
   }
-  // eslint-disable-next-line qwik/no-use-visible-task
+  // oxlint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     try {
       // Load the BlueMap UMD file
@@ -55,7 +58,6 @@ export const Bluemap = component$((props: any) => {
             z: Math.round(z),
           };
         });
-
       } catch (e) {
         console.error('Bluemap mount failed!', e);
       }
@@ -64,8 +66,10 @@ export const Bluemap = component$((props: any) => {
     }
   });
 
-  return <div id="bluemap" {...props}>
-    <div id="map-container" class="w-full h-full"></div>
-    <div id="app" class="hidden"></div>
-  </div>;
+  return (
+    <div id="bluemap" {...props}>
+      <div id="map-container" class="h-full w-full"></div>
+      <div id="app" class="hidden"></div>
+    </div>
+  );
 });
