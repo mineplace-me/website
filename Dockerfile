@@ -3,7 +3,7 @@
 FROM oven/bun:alpine AS base
 WORKDIR /app
 
-RUN apk add wget
+RUN apk add git wget
 
 COPY . .
 
