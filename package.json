@@ -8,7 +8,7 @@
   "scripts": {
     "build": "cd packages/bluemap && vp run build && cd ../mineplace && vp run build",
     "start": "cd packages/bluemap && vp run build && cd ../mineplace && vp run start",
-    "serve": "cd packages/mineplace && vp serve",
+    "serve": "cd packages/mineplace && vp run serve",
     "prepare": "vp config"
   },
   "devDependencies": {
